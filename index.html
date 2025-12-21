@@ -15,7 +15,7 @@
   <!--
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style-prefix.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   
   <!--
     - google font link
@@ -184,44 +184,53 @@
     </div>
     
     <div class="header-main">
+  <div class="container">
+    <div class="header-flex-wrapper">
       
-      <div class="container">
-        
-        <a href="#" class="header-logo">
-          <img src="/assets/images/logo/selectionfurniture.png" alt="Anon's logo" width="180">
-        </a>
-        
-        <div class="header-search-container">
-          
-          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
-          
-          <button class="search-btn">
-            <ion-icon name="search-outline"></ion-icon>
-          </button>
-          
+      <a href="#" class="header-logo">
+        <img src="./assets/images/logo/selectionfurniture.png" alt="Selection Furniture" width="180">
+      </a>
+
+      <div class="header-contact-dropdowns">
+        <div class="contact-item">
+          <a href="tel:+447838040902" class="contact-link">
+            <ion-icon name="call-outline"></ion-icon>
+            <span>07434080902</span>
+          </a>
         </div>
-        
-        <div class="header-user-actions">
+
+        <div class="contact-item dropdown" tabindex="0">
+          <div class="contact-link">
+            <ion-icon name="location-outline"></ion-icon>
+            <span style="margin-right">72 Queens Market</span>
+            <ion-icon name="chevron-down-outline" class="chevron"></ion-icon>
+          </div>
           
-          <button class="action-btn">
-            <ion-icon name="person-outline"></ion-icon>
-          </button>
-          
-          <button class="action-btn">
-            <ion-icon name="heart-outline"></ion-icon>
-            <span class="count">0</span>
-          </button>
-          
-          <button class="action-btn">
-            <ion-icon name="bag-handle-outline"></ion-icon>
-            <span class="count">0</span>
-          </button>
-          
+          <div class="dropdown-content">
+            <div class="map-card">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2481.67389146162!2d0.03478957685160359!3d51.53755350785122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a7c206f36611%3A0xc3317042a3e5c9a4!2s72%20Green%20St%2C%20London%20E13%209BA!5e0!3m2!1sen!2suk!4v1703160000000!5m2!1sen!2suk" 
+                width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+              <div class="map-details">
+                <strong>Selection Furniture</strong>
+                <p>72 Queens Market, Upton Park, London</p>
+                <a href="contacts.html" class="view-contact-btn">View Full Contacts</a>
+              </div>
+            </div>
+          </div>
         </div>
-        
       </div>
-      
+
     </div>
+      <div class="header-search-container">
+      <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+      <button class="search-btn">
+        <ion-icon name="search-outline"></ion-icon>
+      </button>
+    </div>
+    </div>
+    
+</div>
     
     <nav class="desktop-navigation-menu">
       
