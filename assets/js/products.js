@@ -6,11 +6,11 @@ const products = [
     "name": "Malta 3 Seater Sofa",
     "category": "Sofa",
     "description": "A comfortable 3-seater sofa with velvet finish.",
-    "price": 20.00,
-    "currency": "USD",
+    "price": 399.,
+    "currency": "GBP",
     "image": "./assets/images/banner-1.jpg",
     "link": "#",
-    "badge": "Trending item"
+    "badge": "trending item"
   },
   {
     "id": "hero-002",

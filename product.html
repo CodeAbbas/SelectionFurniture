@@ -623,6 +623,9 @@
   </header>
 
   <main>
+    
+    
+  <main>
     <div class="product-container">
   <div class="container">
     
@@ -635,16 +638,15 @@
             
             <div class="showcase" style="display: flex; flex-wrap: wrap; gap: 40px; border: 1px solid var(--cultured); padding: 30px; border-radius: var(--border-radius-md); background: white; overflow: hidden; position: relative;">
               
-              <div class="showcase-banner" style="flex: 1; min-width: 300px; position: relative;">
-                <img id="detail-image" src="./assets/images/products/1.jpg" alt="Product Image" class="showcase-img" style="width: 100%; border-radius: var(--border-radius-md); object-fit: cover;">
-                <div id="detail-badge-container"></div>
+              <div class="showcase-banner" id="banner-container" style="flex: 1; min-width: 300px; position: relative; overflow: hidden; border-radius: var(--border-radius-md);">
+                <img id="detail-image" src="./assets/images/products/1.jpg" alt="Product Image" class="showcase-img" style="width: 100%; height: auto; object-fit: cover;">
               </div>
               
               <div class="showcase-content" style="flex: 1; min-width: 300px; margin-top: 0; display: flex; flex-direction: column; justify-content: center;">
                 
-                <div class="showcase-rating" id="detail-rating" style="margin-bottom: 15px; color: var(--sandy-brown); display: flex; font-size: 1.1rem;"></div>
+                <div class="showcase-rating" id="detail-rating" style="margin-bottom: 15px; display: flex; gap: 2px;"></div>
                 
-                <h3 class="showcase-title" style="font-size: 1.6rem; margin-bottom: 10px; white-space: normal; overflow: visible; font-weight: 600;">
+                <h3 class="showcase-title" style="font-size: 1.4rem; margin-bottom: 10px; white-space: normal; overflow: visible; font-weight: 600;">
                   <a href="#" id="detail-name" style="color: var(--eerie-black);">Product Name Loading...</a>
                 </h3>
                 
@@ -690,7 +692,7 @@
     <div class="product-minimal" style="margin-top: 50px;">
       <h2 class="title">You May Also Like</h2>
       <div class="product-showcase">
-        <div class="showcase-wrapper has-scrollbar" id="suggested-products-wrapper">
+        <div class="showcase-wrapper has-scrollbar" id="suggested-products-wrapper" style="display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px;">
         </div>
       </div>
     </div>

@@ -500,9 +500,6 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 }
 
 
-
-
-
 /*-----------------------------------*\
   #HEADER
 \*-----------------------------------*/
@@ -513,7 +510,7 @@ body::-webkit-scrollbar-thumb:hover { background: hsl(0, 0%, 70%); }
 
 .header-main {
   padding: 10px 0;
-  border-bottom: 1px solid var(--cultured);
+  /*border-bottom: 1px solid var(--cultured);*/
 }
 .header-flex-wrapper {
   display: flex;
