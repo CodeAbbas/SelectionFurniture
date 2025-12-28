@@ -822,32 +822,42 @@ margin-top:-15px; }
 }
 
 .menu-bottom .submenu-category:not(:last-child) { border-bottom: 1px solid var(--cultured); }
+.menu-divider {
+  border: 0;
+  border-top: 1px solid var(--cultured); /* Light gray */
+  margin: 20px 0;
+}
+.social-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 15px; /* Space between buttons */
+  padding: 0 10px;
+}
 
-.menu-social-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.social-btn {
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+.social-btn.whatsapp {
+  background-color: #e6f6eb; /* Very light green */
+  color: #25D366; /* WhatsApp Green */
+}
+.social-btn.tiktok {
+  background-color: #f0f0f0; /* Light Gray */
+  color: #000000; /* TikTok Black */
 }
 
-.menu-social-container .social-link {
-  background: var(--cultured);
-  color: var(--eerie-black);
-  font-size: 20px;
-  padding: 10px;
-  -webkit-border-radius: var(--border-radius-md);
-          border-radius: var(--border-radius-md);
+.social-btn:active {
+  opacity: 0.7;
 }
-
 
 
 
@@ -856,7 +866,7 @@ margin-top:-15px; }
   #BANNER
 \*-----------------------------------*/
 
-.banner { margin: 30px 0; }
+.banner { margin: 0px 0; }
 
 .slider-container {
   display: -webkit-box;
@@ -905,10 +915,8 @@ margin-top:-15px; }
    position: absolute;
   left: 25px;
   right: 25px;
-  
-          
   background: hsla(0, 0%, 100%, 0.2);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   
@@ -1115,7 +1123,8 @@ margin-top:-15px; }
   font-weight: var(--weight-600);
 }
 
-.sidebar-close-btn ion-icon { --ionicon-stroke-width: 50px; }
+.sidebar-close-btn ion-icon { --ionicon-stroke-width: 50px; 
+}
 
 .sidebar-accordion-menu {
   width: 100%;
@@ -2062,7 +2071,7 @@ footer {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-column-gap: 20px;
+  column-gap: 20px;
      -moz-column-gap: 20px;
           
   margin-bottom: 15px;
@@ -3039,7 +3048,7 @@ footer {
 
   .product-featured .countdown-content { padding: 5px 10px; }
 
-  .product-grid { -ms-grid-columns: (1fr)[3]; grid-template-columns: repeat(3, 1fr); }
+  .product-grid { -ms-grid-columns: (1fr)(3); grid-template-columns: repeat(3, 1fr); }
 
 
 
@@ -3233,7 +3242,7 @@ footer {
 
   .footer-nav { padding-bottom: 50px; }
 
-}
+
 
 
 

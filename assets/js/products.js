@@ -15,12 +15,12 @@ const products = [
   {
     "id": "hero-002",
     "type": "banner",
-    "name": "Modern Sunglasses",
+    "name": "Sycylia High Gloss Sliding Door Wardrobe New Branding",
     "category": "Accessories",
     "description": "Stylish protection for sunny days.",
     "price": 15.00,
     "currency": "USD",
-    "image": "./assets/images/banner-2.jpg",
+    "image": "https://slidingwardrobes4u.com/wp-content/uploads/2025/06/White-sycylia-3-door-with-LED-Light-sliding-door-1536x1536.jpg",
     "link": "#",
     "badge": "Trending accessories"
   },
