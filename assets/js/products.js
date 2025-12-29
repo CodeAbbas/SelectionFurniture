@@ -29,12 +29,12 @@ const products = [
   {
     "id": "deal-001",
     "type": "deal",
-    "name": "Shampoo, Conditioner & Facewash Packs",
+    "name": "Lyllie Sliding Wardrobe",
     "category": "Cosmetics",
     "description": "Complete care package for your daily routine. Limited time offer.",
-    "price": 150.00,
-    "original_price": 200.00,
-    "currency": "USD",
+    "price": 700.00,
+    "original_price": 879.99,
+    "currency": "GBP",
     "rating": 3,
     "image": "https://slidingwardrobes4u.com/wp-content/uploads/2024/03/white-oak-2-1536x1536.jpg",
     "stock_status": {
@@ -47,14 +47,14 @@ const products = [
   {
     "id": "deal-002",
     "type": "deal",
-    "name": "Rose Gold Diamond Earring",
+    "name": "RUGBY BEDROOM SET (TWIN CREAM)",
     "category": "Jewellery",
     "description": "Elegant rose gold earrings embedded with premium diamonds.",
     "price": 1990.00,
     "original_price": 2000.00,
     "currency": "USD",
     "rating": 5,
-    "image": "./assets/images/products/jewellery-1.jpg",
+    "image": "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/3-7.jpg",
     "stock_status": {
       "sold": 15,
       "available": 40,
@@ -66,22 +66,24 @@ const products = [
   // --- STANDARD FURNITURE PRODUCTS (Grid & New Arrivals) ---
   {
     "id": "prod-101",
-    "name": "Mens Winter Leathers Jackets",
-    "category": "Jacket",
-    "price": 48.00,
-    "original_price": 75.00,
-    "currency": "USD",
-    "rating": 4,
+    "name": "Jamajka Sliding Wardrobe",
+    "category": "Bedroom",
+    "description": "Modern sliding wardrobe with striped door design and full-length mirror.",
+    "price": 599.00,
+    "original_price": 699.00,
+    "currency": "GBP",
+    "rating": 5,
     "images": {
-      "default": "./assets/images/products/jacket-3.jpg",
-      "hover": "./assets/images/products/jacket-4.jpg"
+      "default": "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-outside.jpg",
+      "hover": "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-inside-203.jpg"
     },
     "badges": [
-      { "text": "15%", "color": "ocean-green", "type": "rect" }
+      { "text": "sale", "color": "eerie-black", "type": "angle" },
+      { "text": "new", "color": "pink", "type": "angle" }
     ],
-    "actions": ["heart", "eye", "repeat", "bag"],
-    "is_new_arrival": false,
-    "is_best_seller": false
+    "is_new_arrival": true,
+    "is_best_seller": true,
+    "actions": ["heart", "eye", "repeat", "bag"]
   },
   {
     "id": "prod-102",

@@ -178,11 +178,14 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   function formatCurrency(amount, currency) {
-    if (currency === 'USD') return `$${amount.toFixed(2)}`;
-    if (currency === 'EUR') return `€${amount.toFixed(2)}`;
-    return `${amount}`;
-    if (currency === 'GBP') return `£${amount.toFixed(2)}`;
-    return `${amount}`;
+    const value = amount.toFixed(2);
+
+    if (currency === 'USD') return `$${value}`;
+    if (currency === 'EUR') return `€${value}`;
+    if (currency === 'GBP') return `£${value}`;
+
+    // Default fallback if currency isn't matched
+    return `${currency} ${value}`;
   }
   
 });

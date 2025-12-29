@@ -68,6 +68,19 @@ for (let i = 0; i < accordionBtn.length; i++) {
   });
 }
 
+/**
+ Currency Formatter
+ */
+function formatCurrency(amount, currency) {
+  const value = amount.toFixed(2);
+
+  if (currency === 'USD') return `$${value}`;
+  if (currency === 'EUR') return `€${value}`;
+  if (currency === 'GBP') return `£${value}`;
+
+  // Default fallback if currency isn't matched
+  return `${currency} ${value}`;
+}
 
 /**
  * PRODUCT INJECTION LOGIC
@@ -79,7 +92,7 @@ const newProductsContainer = document.getElementById('new-products-grid');
 // 2. Define a function to generate the HTML for a single product card
 function generateProductCard(product) {
   
-  // Handle badges (Sale, New, % off)
+  // Handle badges
   let badgeHtml = '';
   if (product.badges && product.badges.length > 0) {
     product.badges.forEach(badge => {
@@ -87,11 +100,11 @@ function generateProductCard(product) {
     });
   }
 
-  // Calculate discount percentage or show prices
+  // UPDATED: Use formatCurrency for price
   const priceHtml = `
     <div class="price-box">
-      <p class="price">$${product.price.toFixed(2)}</p>
-      ${product.original_price ? `<del>$${product.original_price.toFixed(2)}</del>` : ''}
+      <p class="price">${formatCurrency(product.price, product.currency)}</p>
+      ${product.original_price ? `<del>${formatCurrency(product.original_price, product.currency)}</del>` : ''}
     </div>
   `;
 
@@ -118,7 +131,7 @@ function generateProductCard(product) {
         <a href="#" class="showcase-category">${product.category}</a>
         
         <h3>
-          <a href="./product.html?id=${product.id}" class="minimal-title">${product.name}</a>
+          <a href="./product.html?id=${product.id}" class="showcase-title">${product.name}</a>
         </h3>
 
         <div class="showcase-rating">
@@ -170,7 +183,7 @@ function generateDealCard(product) {
   const total = product.stock_status.sold + product.stock_status.available;
   const soldPercentage = Math.round((product.stock_status.sold / total) * 100);
 
-  // 2. Build HTML
+  // 2. Build HTML (UPDATED PRICES)
   return `
     <div class="showcase-container">
       <div class="showcase">
@@ -192,8 +205,8 @@ function generateDealCard(product) {
           <p class="showcase-desc">${product.description}</p>
 
           <div class="price-box">
-            <p class="price">$${product.price.toFixed(2)}</p>
-            <del>$${product.original_price.toFixed(2)}</del>
+            <p class="price">${formatCurrency(product.price, product.currency)}</p>
+            <del>${formatCurrency(product.original_price, product.currency)}</del>
           </div>
 
           <button class="add-cart-btn">add to cart</button>
