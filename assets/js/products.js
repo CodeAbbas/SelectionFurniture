@@ -36,7 +36,7 @@ const products = [
     "original_price": 200.00,
     "currency": "USD",
     "rating": 3,
-    "image": "./assets/images/products/shampoo.jpg",
+    "image": "https://slidingwardrobes4u.com/wp-content/uploads/2024/03/white-oak-2-1536x1536.jpg",
     "stock_status": {
       "sold": 20,
       "available": 40,
@@ -148,8 +148,8 @@ const products = [
       "hover": "./assets/images/products/watch-4.jpg"
     },
     "badges": [
-      { "text": "sale", "color": "eerie-black", "type": "angle" }
-    ],
+  { "text": "new", "color": "pink", "type": "angle" } // Changed salmon-pink to pink
+],
     "is_new_arrival": false,
     "is_best_seller": false
   }

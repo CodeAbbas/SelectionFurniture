@@ -839,7 +839,7 @@ margin-top:-15px; }
   align-items: center;
   justify-content: center;
   margin-right: 5px;
-  padding: 12px;
+  padding: 5px;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -847,8 +847,9 @@ margin-top:-15px; }
   text-decoration: none;
 }
 .social-btn.whatsapp {
-  background-color: #e6f6eb; /* Very light green */
-  color: #25D366; /* WhatsApp Green */
+  background-color: #f0f0f0;
+  color: #25D366;
+  
 }
 .social-btn.tiktok {
   background-color: #f0f0f0; /* Light Gray */
@@ -912,14 +913,14 @@ margin-top:-15px; }
 }
 
 .banner-content {
-   position: absolute;
+  position: absolute;
   left: 25px;
   right: 25px;
   background: hsla(0, 0%, 100%, 0.2);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  
+  overflow: hidden;
   /* Compact Layout */
   bottom: 15px;       /* Moved closer to the bottom edge */
   padding: 8px 12px;  /* Reduced padding inside the glass box */
@@ -1348,6 +1349,17 @@ margin-top:-15px; }
 .product-minimal .showcase-title {
   color: var(--eerie-black);
   font-size: var(--fs-7);
+  font-weight: var(--weight-600);
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.minimal-title{
+  color: var(--eerie-black);
+  font-size: var(--fs-6);
   font-weight: var(--weight-600);
   text-transform: capitalize;
   white-space: nowrap;
