@@ -101,7 +101,7 @@
             <div class="contact-item dropdown" tabindex="0">
               <div class="contact-link">
                 <ion-icon name="location-outline"></ion-icon>
-                <span style="margin-right">72 Queens Market</span>
+                <span>72 Queens Market</span>
                 <ion-icon name="chevron-down-outline" class="chevron"></ion-icon>
               </div>
               
@@ -640,6 +640,8 @@
               
               <div class="showcase-banner" id="banner-container" style="flex: 1; min-width: 300px; position: relative; overflow: hidden; border-radius: var(--border-radius-md);">
                 <img id="detail-image" src="./assets/images/products/1.jpg" alt="Product Image" class="showcase-img" style="width: 100%; height: auto; object-fit: cover;">
+                <div id="detail-gallery-container" style="display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; padding-bottom: 5px;">
+    </div>
               </div>
               
               <div class="showcase-content" style="flex: 1; min-width: 300px; margin-top: 0; display: flex; flex-direction: column; justify-content: center;">
@@ -679,6 +681,12 @@
                 <div style="font-size: 0.85rem; color: var(--sonic-silver); border-top: 1px solid var(--cultured); padding-top: 20px;">
                   <p style="margin-bottom: 5px;"><strong>Category:</strong> <span id="detail-category" style="color: var(--eerie-black);">Furniture</span></p>
                   <p><strong>SKU:</strong> <span id="detail-id">...</span></p>
+                </div>
+                <div id="detail-long-desc-wrapper"
+                  style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--cultured); display: none;">
+                  <h4 style="font-size: 1rem; font-weight: 600; color: var(--eerie-black); margin-bottom: 10px;">Product Details:</h4>
+                  <p id="detail-long-desc" style="font-size: 0.9rem; color: var(--sonic-silver); line-height: 1.8;">
+                  </p>
                 </div>
                 
               </div>

@@ -30,12 +30,63 @@ document.addEventListener("DOMContentLoaded", function() {
     oldPriceEl.style.display = 'none';
   }
   
-  // Image Logic
+  // --- IMAGE & GALLERY LOGIC ---
   const imgEl = document.getElementById('detail-image');
-  if (typeof product.images === 'object' && product.images.default) {
-    imgEl.src = product.images.default;
-  } else {
-    imgEl.src = product.image;
+  const galleryContainer = document.getElementById('detail-gallery-container');
+  
+  // 1. Consolidate all available images into a single list
+  let imageList = [];
+  
+  if (product.gallery && product.gallery.length > 0) {
+    // Priority: Use the new gallery array
+    imageList = product.gallery;
+  } else if (product.images && product.images.default) {
+    // Fallback: Use old object format
+    imageList.push(product.images.default);
+    if (product.images.hover) imageList.push(product.images.hover);
+  } else if (product.image) {
+    // Fallback: Use single string format
+    imageList.push(product.image);
+  }
+
+  // 2. Set Main Image (First one in list)
+  if (imageList.length > 0) {
+    imgEl.src = imageList[0];
+  }
+
+  // 3. Generate Thumbnails
+  galleryContainer.innerHTML = ''; // Clear existing
+  
+  if (imageList.length > 1) {
+    imageList.forEach((imgSrc, index) => {
+      const thumb = document.createElement('img');
+      thumb.src = imgSrc;
+      thumb.alt = `${product.name} view ${index + 1}`;
+      
+      // Styling for thumbnails
+      thumb.style.width = '70px';
+      thumb.style.height = '70px';
+      thumb.style.objectFit = 'cover';
+      thumb.style.borderRadius = '5px';
+      thumb.style.cursor = 'pointer';
+      thumb.style.border = index === 0 ? '2px solid var(--industrial-wood)' : '1px solid #ddd';
+      thumb.style.transition = '0.2s';
+
+      // Click Event: Swap Main Image
+      thumb.addEventListener('click', function() {
+        imgEl.src = imgSrc;
+        
+        // Update active border styling
+        Array.from(galleryContainer.children).forEach(child => {
+          child.style.border = '1px solid #ddd';
+          child.style.opacity = '0.7';
+        });
+        thumb.style.border = '2px solid var(--industrial-wood)';
+        thumb.style.opacity = '1';
+      });
+
+      galleryContainer.appendChild(thumb);
+    });
   }
   
   // --- CUSTOM SVG STARS (Saddle Brown) ---
@@ -132,6 +183,22 @@ document.addEventListener("DOMContentLoaded", function() {
     createBadge("Sale", "--eerie-black");
   }
   
+  // --- INJECT LONG DESCRIPTION ---
+  const longDescWrapper = document.getElementById('detail-long-desc-wrapper');
+  const longDescEl = document.getElementById('detail-long-desc');
+
+  if (product.long_description) {
+    // If long description exists, show the section and inject content
+    longDescEl.innerHTML = product.long_description;
+    longDescWrapper.style.display = 'block';
+  } else {
+    // Optional: Fallback to the short description if no long one exists
+    // longDescEl.innerHTML = product.description; 
+    // longDescWrapper.style.display = 'block';
+    
+    // Or just hide the section entirely
+    longDescWrapper.style.display = 'none';
+  }
   // --- "YOU MAY ALSO LIKE" (Compact Horizontal Cards) ---
   const suggestionsWrapper = document.getElementById('suggested-products-wrapper');
   

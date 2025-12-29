@@ -27,7 +27,7 @@ const products = [
 
   // --- DEAL OF THE DAY (Featured with Timer & Stock) ---
   {
-    "id": "deal-001",
+    "id": "deal-001, prod-102",
     "type": "deal",
     "name": "Lyllie Sliding Wardrobe",
     "category": "Cosmetics",
@@ -66,9 +66,10 @@ const products = [
   // --- STANDARD FURNITURE PRODUCTS (Grid & New Arrivals) ---
   {
     "id": "prod-101",
-    "name": "Jamajka Sliding Wardrobe",
+    "name": "Lyllie 2 Door Sliding Wardrobe",
     "category": "Bedroom",
     "description": "Modern sliding wardrobe with striped door design and full-length mirror.",
+    "long_description": "Lyllie 2 Door Sliding Wardrobe White 150/203cm\n\nElegant Style:\nVotan Oak Striped Door with a Mirror Door gives this wardrobe a very special look which enhances the beauty of your home/Bedroom.\n\nMaterial:\nThe wardrobe is made from MDF Chipboard with a Laminated Matt Finish available in 2 colors White and Black with Oak Strip doors.\n\nSpecifications and Dimensions:\n\nLyllie Wardrobe 150cm Specification:\nDouble Sliding Mirror Doors\n6 Shelves\n2 Hanging rails.\n\n150cm Dimensions:\nWidth: 150cm\nHeight: 217cm\nDepth: 62cm\n\nLyllie Wardrobe 203cm Specification:\nDouble Sliding Mirror Doors\n10 Shelves\n4 Hanging rails.\n\n203cm Dimensions:\nWidth: 203cm\nHeight: 217cm\nDepth: 62cm\n\nAssembly Guideline:\nAssembly Instructions are available in paper form inside the item Door Boxes.",
     "price": 599.00,
     "original_price": 699.00,
     "currency": "GBP",
@@ -77,6 +78,12 @@ const products = [
       "default": "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-outside.jpg",
       "hover": "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-inside-203.jpg"
     },
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-outside.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/White-inside-203.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/Black-outside.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/Grey-outside.jpg"
+    ],
     "badges": [
       { "text": "sale", "color": "eerie-black", "type": "angle" },
       { "text": "new", "color": "pink", "type": "angle" }
@@ -86,7 +93,7 @@ const products = [
     "actions": ["heart", "eye", "repeat", "bag"]
   },
   {
-    "id": "prod-102",
+    "id": "prod-107",
     "name": "Pure Garment Dyed Cotton Shirt",
     "category": "Shirt",
     "price": 45.00,

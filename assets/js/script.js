@@ -91,7 +91,22 @@ const newProductsContainer = document.getElementById('new-products-grid');
 
 // 2. Define a function to generate the HTML for a single product card
 function generateProductCard(product) {
-  
+  let imgDefault = '';
+  let imgHover = '';
+
+  if (product.gallery && product.gallery.length >= 2) {
+    // If gallery exists, use 1st and 2nd image
+    imgDefault = product.gallery[0];
+    imgHover = product.gallery[1];
+  } else if (product.images) {
+    // Fallback to old object structure
+    imgDefault = product.images.default;
+    imgHover = product.images.hover || product.images.default;
+  } else {
+    // Fallback to single image
+    imgDefault = product.image;
+    imgHover = product.image;
+  }
   // Handle badges
   let badgeHtml = '';
   if (product.badges && product.badges.length > 0) {
@@ -110,11 +125,10 @@ function generateProductCard(product) {
 
   return `
     <div class="showcase">
-      
       <div class="showcase-banner">
         <a href="./product.html?id=${product.id}">
-          <img src="${product.images.default}" alt="${product.name}" width="300" class="product-img default">
-          <img src="${product.images.hover}" alt="${product.name}" width="300" class="product-img hover">
+          <img src="${imgDefault}" alt="${product.name}" width="300" class="product-img default">
+          <img src="${imgHover}" alt="${product.name}" width="300" class="product-img hover">
         </a>
         
         ${badgeHtml}
@@ -126,22 +140,13 @@ function generateProductCard(product) {
           <button class="btn-action"><ion-icon name="bag-add-outline"></ion-icon></button>
         </div>
       </div>
-
+      
       <div class="showcase-content">
         <a href="#" class="showcase-category">${product.category}</a>
-        
-        <h3>
-          <a href="./product.html?id=${product.id}" class="showcase-title">${product.name}</a>
-        </h3>
-
+        <h3><a href="./product.html?id=${product.id}" class="showcase-title">${product.name}</a></h3>
         <div class="showcase-rating">
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-icon name="star-outline"></ion-icon>
+          <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-outline"></ion-icon><ion-icon name="star-outline"></ion-icon>
         </div>
-
         ${priceHtml}
       </div>
     </div>
