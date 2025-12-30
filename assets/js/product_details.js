@@ -16,10 +16,28 @@ document.addEventListener("DOMContentLoaded", function() {
   
   // 3. Inject Main Details
   document.getElementById('detail-name').innerText = product.name;
-  document.getElementById('detail-category').innerText = product.category;
   document.getElementById('detail-id').innerText = product.id;
   document.getElementById('detail-desc').innerText = product.description || "Experience comfort and style with this premium furniture piece.";
   document.getElementById('detail-price').innerText = formatCurrency(product.price, product.currency);
+
+  const categoryEl = document.getElementById('detail-category');
+  
+  let catText = "";
+
+  // 1. Handle Multiple Categories
+  if (product.categories && Array.isArray(product.categories)) {
+    // Join them nicely: "Bedroom / Wardrobes"
+    catText = product.categories.join(' / ');
+  } else if (product.category) {
+    catText = product.category;
+  }
+
+  // 2. Append Subcategory if it exists
+  if (product.subcategory) {
+    catText += ` / ${product.subcategory}`;
+  }
+
+  categoryEl.innerText = catText;
   
   // Old Price Logic
   const oldPriceEl = document.getElementById('detail-old-price');
@@ -55,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // 3. Generate Thumbnails
-  galleryContainer.innerHTML = ''; // Clear existing
+  galleryContainer.innerHTML = ''; 
   
   if (imageList.length > 1) {
     imageList.forEach((imgSrc, index) => {

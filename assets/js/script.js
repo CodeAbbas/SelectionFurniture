@@ -107,6 +107,26 @@ function generateProductCard(product) {
     imgDefault = product.image;
     imgHover = product.image;
   }
+  // Category 
+  let displayCategory = "Furniture";
+  
+  if (product.categories && product.categories.length > 0) {
+    // 1. Get Main Category: Prefer 2nd item (e.g., "Wardrobes"), else 1st ("Bedroom")
+    const mainCat = product.categories.length > 1 ? product.categories[1] : product.categories[0];
+    
+    // 2. Combine with Subcategory
+    if (product.subcategory) {
+      displayCategory = `${mainCat} / ${product.subcategory}`;
+    } else {
+      displayCategory = mainCat;
+    }
+  } else if (product.category) {
+    // Fallback for older products
+    displayCategory = product.category;
+    if (product.subcategory) {
+      displayCategory += ` / ${product.subcategory}`;
+    }
+  }
   // Handle badges
   let badgeHtml = '';
   if (product.badges && product.badges.length > 0) {
@@ -142,7 +162,7 @@ function generateProductCard(product) {
       </div>
       
       <div class="showcase-content">
-        <a href="#" class="showcase-category">${product.category}</a>
+        <a href="#" class="showcase-category">${displayCategory}</a>
         <h3><a href="./product.html?id=${product.id}" class="showcase-title">${product.name}</a></h3>
         <div class="showcase-rating">
           <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-outline"></ion-icon><ion-icon name="star-outline"></ion-icon>
