@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop Categories - Selection Furniture</title>
+  
+  <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <style>
+    .category-page-container {
+      display: flex;
+      gap: 30px;
+      padding-top: 30px;
+      padding-bottom: 50px;
+      position: relative;}
+
+    @media (min-width: 1024px) {
+      .category-page-container {
+        flex-direction: row; /* Desktop: Side-by-side */
+      }
+    }
+
+    /* --- SIDEBAR FILTERS --- */
+    .filter-sidebar {
+      width: 25%; /* Mobile: Full width */
+      display: none; /* Hidden by default on mobile */
+      min-width: 200px;
+      background: var(--white);
+      margin-bottom: 20px;
+      border-radius: var(--border-radius-md);
+    }
+    
+    /* Force sidebar to show on Desktop */
+    @media (min-width: 1024px) {
+      .filter-sidebar { 
+        display: block !important; 
+        width: 25%;
+        min-width: 250px;
+        margin-bottom: 0;
+      }
+    }
+
+    .filter-widget {
+      margin-bottom: 20px;
+      border: 1px solid var(--cultured);
+      border-radius: var(--border-radius-md);
+      padding: 20px;
+    }
+
+    .widget-title {
+      font-size: var(--fs-6);
+      font-weight: var(--weight-600);
+      color: var(--eerie-black);
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--cultured);
+    }
+
+    /* --- RICH FILTER TREE (Accordion) --- */
+    .filter-tree-item {
+      margin-bottom: 5px;
+    }
+    
+    .filter-tree-parent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+    
+    .filter-tree-parent:hover {
+      color: var(--industrial-wood);
+    }
+    
+    .filter-group-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem; /* Larger font for mobile readability */
+      color: var(--eerie-black);
+      font-weight: 500;
+    }
+
+    .toggle-icon {
+      font-size: 16px;
+      color: var(--sonic-silver);
+      transition: transform 0.3s ease;
+    }
+    
+    /* Rotate icon when active */
+    .filter-tree-item.active .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Nested Submenu Animation */
+    .filter-tree-children {
+      margin-left: 20px;
+      max-height: 0; /* Hidden state */
+      overflow: hidden;
+      transition: max-height 0.4s ease-out; /* Smooth slide */
+      border-left: 2px solid var(--cultured);
+      padding-left: 15px;
+    }
+    
+    .filter-tree-item.active .filter-tree-children {
+      max-height: 800px; /* Expanded state (arbitrary large height) */
+      margin-top: 5px;
+      margin-bottom: 15px;
+      transition: max-height 0.5s ease-in;
+    }
+
+    .sub-item {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--sonic-silver);
+    }
+    
+    .filter-checkbox {
+      accent-color: var(--industrial-wood);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* --- PRICE INPUTS --- */
+    .price-inputs {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .price-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--cultured);
+      border-radius: 5px;
+      font-size: var(--fs-7);
+    }
+
+    /* --- MAIN CONTENT AREA --- */
+    .category-main-content {
+      flex: 1;
+      width: 100%;
+    }
+
+    .shop-header {
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping on small mobile */
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--cultured);
+    }
+
+    .sort-select {
+      padding: 8px;
+      border: 1px solid var(--cultured);
+      border-radius: 5px;
+      color: var(--sonic-silver);
+      font-size: var(--fs-7);
+      background-color: white;
+    }
+
+    /* Responsive Filters for Mobile */
+    .mobile-filter-btn {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      padding: 10px;
+      background: var(--industrial-wood);
+      color: white;
+      text-align: center;
+      align-items: center;
+      font-weight: 600;
+      gap: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    @media (min-width: 1024px) {
+      .mobile-filter-btn { display: none; }
+    }
+
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    
+    <div class="header-top">
+      
+      <div class="container">
+        
+        <ul class="header-social-container">
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          
+        </ul>
+        
+        <div class="header-alert-news">
+          <p>
+            <b>Free Shipping</b>
+            This Week Order Over - $55
+          </p>
+        </div>
+        
+        <div class="header-top-actions">
+          
+          <select name="currency">
+          
+            <option value="usd">USD &dollar;</option>
+            <option value="eur">EUR &euro;</option>
+            
+          </select>
+          
+          <select name="language">
+          
+            <option value="en-US">English</option>
+            <option value="es-ES">Espa&ntilde;ol</option>
+            <option value="fr">Fran&ccedil;ais</option>
+            
+          </select>
+          
+        </div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="header-main">
+      <div class="container">
+        <div class="header-flex-wrapper">
+          
+          <a href="#" class="header-logo">
+            <img src="./assets/images/logo/selectionfurniture.png" alt="Selection Furniture" width="180">
+          </a>
+          
+          <div class="header-contact-dropdowns">
+            <div class="contact-item">
+              <a href="tel:+447838040902" class="contact-link">
+                <ion-icon name="call-outline"></ion-icon>
+                <span>07434080902</span>
+              </a>
+            </div>
+            
+            <div class="contact-item dropdown" tabindex="0">
+              <div class="contact-link">
+                <ion-icon name="location-outline"></ion-icon>
+                <span>72 Queens Market</span>
+                <ion-icon name="chevron-down-outline" class="chevron"></ion-icon>
+              </div>
+              
+              <div class="dropdown-content">
+                <div class="map-card">
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.434778116982!2d0.031098877142460613!3d51.53423630883391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a70032ae6603%3A0x2becf3ac962bf021!2sSelection%20Furniture!5e0!3m2!1sen!2suk!4v1734796020000!5m2!1sen!2suk" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                  </iframe>
+                  <div class="map-details">
+                    <strong>Selection Furniture</strong>
+                    <p>72 Queen's Market, Upton Park,<br>
+                      E13 9BA, London</p>
+                    <a href="https://maps.app.goo.gl/rJ68gaG9eTfXDYdSA" target="_blank" class="view-contact-btn">Get direction</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="header-search-container">
+          <input type="search" name="search" class="search-field" placeholder="Enter your product name...">
+          <button class="search-btn">
+            <ion-icon name="search-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    
+    <nav class="desktop-navigation-menu">
+  
+  <div class="container">
+    
+    <ul class="desktop-menu-category-list">
+      
+      <li class="menu-category">
+        <a href="./index.html" class="menu-title">Home</a>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Sofa</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Sofa bed</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Corner sofa</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Corner Sofa Bed</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Recliner</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Beds</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Divan</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Velvet</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">High gloss</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Bunk bed</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Wardrobes</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Sliding</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Two door</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Three/Four door</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">High gloss</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Dining</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Table</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Marble table set</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Chair</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Budget sets</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Bedroom sets</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Table</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">High gloss set</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Velvet sets</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Budget sets</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Mattress</a>
+        
+        <ul class="dropdown-list">
+          
+          <li class="dropdown-item">
+            <a href="#">Orthopedic</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Blue foam</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Spring</a>
+          </li>
+          
+          <li class="dropdown-item">
+            <a href="#">Latex / Majestic</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      <li class="menu-category">
+        <a href="#" class="menu-title">Hot Offers</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+  
+</nav>
+    
+    <div class="mobile-bottom-navigation">
+  
+  <button class="action-btn" data-mobile-menu-open-btn>
+    <ion-icon name="menu-outline"></ion-icon>
+  </button>
+  
+  <button class="action-btn">
+    <ion-icon name="bag-handle-outline"></ion-icon>
+    <span class="count">0</span>
+  </button>
+  
+  <button class="action-btn" onclick="window.location.href='index.html'">
+    <ion-icon name="home-outline"></ion-icon>
+  </button>
+  
+  <button class="action-btn">
+    <ion-icon name="heart-outline"></ion-icon>
+    <span class="count">0</span>
+  </button>
+  
+  <button class="action-btn" data-mobile-menu-open-btn>
+    <ion-icon name="grid-outline"></ion-icon>
+  </button>
+  
+</div>
+    
+    <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
+      
+      <div class="menu-top">
+        <h2 class="menu-title">Menu</h2>
+        
+        <button class="menu-close-btn" data-mobile-menu-close-btn>
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+      
+      <ul class="mobile-menu-category-list">
+        
+        <li class="menu-category">
+          <a href="#" class="menu-title">HOME</a>
+        </li>
+        
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Sofa</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Sofa bed</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Corner sofa</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Corner Sofa Bed</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Recliner</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Beds</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Divan</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Velvet</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">High gloss</a>
+            </li>
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Bunk bed</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Wardrobes</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Sliding</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Two door</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Three/Four door</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">High gloss</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Dining</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Table</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Marble table set</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Chair</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Budget sets</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Bedroom sets</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Table</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">High gloss set</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Velvet sets</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Budget sets</a>
+            </li>
+            
+          </ul>
+          
+        </li>
+        <li class="menu-category">
+          
+          <button class="accordion-menu" data-accordion-btn>
+            <p class="menu-title">Mattress</p>
+            
+            <div>
+              <ion-icon name="add-outline" class="add-icon"></ion-icon>
+              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
+            </div>
+          </button>
+          
+          <ul class="submenu-category-list" data-accordion>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Orthopedic</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Blue foam</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Spring (& pocket spring)</a>
+            </li>
+            
+            <li class="submenu-category">
+              <a href="#" class="submenu-title">Latex / Majestic</a>
+            </li>
+          </ul>
+          
+        </li>
+        
+        <li class="menu-category">
+          <a href="#" class="menu-title">Hot Offers</a>
+        </li>
+        
+      </ul>
+      
+      <div class="menu-bottom">
+        
+        <ul class="menu-category-list">
+          
+          <li class="menu-category">
+            
+            <button class="accordion-menu" data-accordion-btn>
+              <p class="menu-title">Language</p>
+              
+              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+            </button>
+            
+            <ul class="submenu-category-list" data-accordion>
+              
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">English</a>
+              </li>
+              
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">Espa&ntilde;ol</a>
+              </li>
+              
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">Fren&ccedil;h</a>
+              </li>
+              
+            </ul>
+            
+          </li>
+          
+          <li class="menu-category">
+            <button class="accordion-menu" data-accordion-btn>
+              <p class="menu-title">Currency</p>
+              <ion-icon name="caret-back-outline" class="caret-back"></ion-icon>
+            </button>
+            
+            <ul class="submenu-category-list" data-accordion>
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">USD &dollar;</a>
+              </li>
+              
+              <li class="submenu-category">
+                <a href="#" class="submenu-title">EUR &euro;</a>
+              </li>
+            </ul>
+          </li>
+          
+        </ul>
+        
+        <ul class="menu-social-container">
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+          </li>
+          
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          
+        </ul>
+        
+      </div>
+      
+    </nav>
+    <!-- -->
+    
+  </header>
+
+  <main>
+    <div class="container">
+      
+      <div style="padding: 20px 0; font-size: 0.9rem; color: var(--industrial-wood); display: flex;">
+        <a href="index.html" style="color: var(--industrial-wood); font-weight: 600; margin-right: 5px;">Home </a> / <span id="breadcrumb-current" style="color: var(--eerie-black); font-weight: 600; margin-left: 5px;"> Shop</span>
+      </div>
+
+      <div class="category-page-container">
+        
+        <aside class="filter-sidebar" id="filterSidebar">
+          
+          <div class="filter-widget">
+            <h3 class="widget-title">Categories</h3>
+            <ul class="filter-list" id="category-filter-list">
+              </ul>
+          </div>
+
+          <div class="filter-widget">
+            <h3 class="widget-title">Price Range</h3>
+            <div class="price-inputs">
+              <input type="number" id="min-price" class="price-input" placeholder="Min" min="0">
+              <span>-</span>
+              <input type="number" id="max-price" class="price-input" placeholder="Max" min="0">
+            </div>
+            <button id="apply-price" style="width:100%; margin-top:10px; background:var(--industrial-wood); color:white; padding:5px; border-radius:5px;">Apply</button>
+          </div>
+
+          <div class="filter-widget">
+            <h3 class="widget-title">Status</h3>
+            <ul class="filter-list">
+              <li>
+                <input type="checkbox" class="filter-checkbox" value="sale" id="filter-sale">
+                <label for="filter-sale">On Sale</label>
+              </li>
+              <li>
+                <input type="checkbox" class="filter-checkbox" value="new" id="filter-new">
+                <label for="filter-new">New Arrivals</label>
+              </li>
+            </ul>
+          </div>
+
+        </aside>
+
+        <div class="category-main-content">
+          
+          <button class="mobile-filter-btn" onclick="document.getElementById('filterSidebar').style.display = document.getElementById('filterSidebar').style.display === 'block' ? 'none' : 'block'">
+            <ion-icon name="filter-outline" style="display:inline; vertical-align:middle;"></ion-icon> Show Filters
+          </button>
+
+          <div class="shop-header">
+            <p style="color: var(--sonic-silver);">Showing <b id="product-count">0</b> products</p>
+            
+            <select class="sort-select" id="sort-select">
+              <option value="default">Default Sorting</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="newest">Newest First</option>
+            </select>
+          </div>
+
+          <div class="product-grid" id="category-product-grid">
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+  
+
+  <script src="./assets/js/products.js"></script>
+  <script src="./assets/js/script.js"></script> <script src="./assets/js/category.js"></script> <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>
