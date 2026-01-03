@@ -19,10 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
     breadcrumb.innerText = urlSubcategory ? `${urlCategory} / ${urlSubcategory}` : urlCategory;
   }
   
-  // Build the Rich Tree
   initRichFilters();
-  
-  // Initial Render
   filterAndRender();
 
   // --- FUNCTIONS ---
@@ -30,23 +27,25 @@ document.addEventListener("DOMContentLoaded", function() {
   function initRichFilters() {
     filterListContainer.innerHTML = ''; 
     
-    // 1. Build Hierarchy Data Structure
     const hierarchy = {};
     
     products.forEach(p => {
+      // Handle Parent Categories (Array or String)
       const pCats = p.categories || (p.category ? [p.category] : []);
+      
+      // Handle Subcategories (Array or String or Empty)
+      const pSubs = p.subcategories || (p.subcategory ? [p.subcategory] : []);
       
       pCats.forEach(catName => {
         if (!hierarchy[catName]) {
           hierarchy[catName] = new Set();
         }
-        if (p.subcategory) {
-          hierarchy[catName].add(p.subcategory);
-        }
+        // Add all subcategories to this parent in the tree
+        pSubs.forEach(sub => hierarchy[catName].add(sub));
       });
     });
 
-    // 2. Render HTML Tree
+    // Render HTML Tree
     Object.keys(hierarchy).sort().forEach(cat => {
       const subcats = Array.from(hierarchy[cat]).sort();
       const hasChildren = subcats.length > 0;
@@ -54,11 +53,9 @@ document.addEventListener("DOMContentLoaded", function() {
       const li = document.createElement('li');
       li.className = 'filter-tree-item';
       
-      // Expand if active
       const isExpanded = (cat === urlCategory);
       if(isExpanded) li.classList.add('active');
 
-      // Parent Checkbox: Check if URL category matches and NO subcategory is in URL
       const parentChecked = (cat === urlCategory && !urlSubcategory) ? 'checked' : '';
 
       let html = `
@@ -98,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
-    // Add Listeners
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
       cb.addEventListener('change', filterAndRender);
     });
@@ -107,19 +103,15 @@ document.addEventListener("DOMContentLoaded", function() {
   function filterAndRender() {
     let filtered = [...products];
 
-    // --- RICH FILTERING LOGIC (FIXED) ---
-    
-    // 1. Group active filters by Parent Category
+    // 1. Group active filters
     const activeFilters = {}; 
 
-    // Capture Parent Checkboxes
     document.querySelectorAll('.cat-filter:checked').forEach(cb => {
       const parent = cb.value;
       if (!activeFilters[parent]) activeFilters[parent] = { parentChecked: true, children: new Set() };
       else activeFilters[parent].parentChecked = true;
     });
 
-    // Capture Child Checkboxes
     document.querySelectorAll('.sub-filter:checked').forEach(cb => {
       const parent = cb.dataset.parent;
       const sub = cb.value;
@@ -132,30 +124,30 @@ document.addEventListener("DOMContentLoaded", function() {
     if (activeParents.length > 0) {
       filtered = filtered.filter(p => {
         const pCats = p.categories || (p.category ? [p.category] : []);
+        // Normalize subcategories to an array
+        const pSubs = p.subcategories || (p.subcategory ? [p.subcategory] : []);
         
-        // Product must match AT LEAST ONE active parent group
         return activeParents.some(parentKey => {
-          // 1. Does product belong to this parent category?
+          // Does product belong to this parent category?
           if (!pCats.includes(parentKey)) return false;
 
           const group = activeFilters[parentKey];
 
-          // 2. CRITICAL FIX: If any children are checked, STRICTLY match children
+          // Logic: If sub-filters are checked, product must match AT LEAST ONE of them
           if (group.children.size > 0) {
-            return p.subcategory && group.children.has(p.subcategory);
+            // Check if any of product's subcategories are in the checked filters
+            return pSubs.some(s => group.children.has(s));
           }
 
-          // 3. If no children checked, but parent is checked, Match Parent
-          if (group.parentChecked) {
-            return true;
-          }
+          // If no sub-filters checked, but parent is checked, show all in parent
+          if (group.parentChecked) return true;
 
           return false;
         });
       });
     }
 
-    // --- PRICE & STATUS FILTERS ---
+    // --- PRICE, STATUS & SORTING (Keep Standard) ---
     const min = document.getElementById('min-price').value;
     const max = document.getElementById('max-price').value;
     if(min) filtered = filtered.filter(p => p.price >= min);
@@ -168,13 +160,11 @@ document.addEventListener("DOMContentLoaded", function() {
       filtered = filtered.filter(p => p.is_new_arrival);
     }
 
-    // --- SORTING ---
     const sortValue = sortSelect.value;
     if(sortValue === 'price-low') filtered.sort((a,b) => a.price - b.price);
     if(sortValue === 'price-high') filtered.sort((a,b) => b.price - a.price);
     if(sortValue === 'newest') filtered.sort((a,b) => (b.is_new_arrival === true) - (a.is_new_arrival === true));
 
-    // RENDER
     countLabel.innerText = filtered.length;
     renderGrid(filtered);
   }
@@ -187,10 +177,8 @@ document.addEventListener("DOMContentLoaded", function() {
     productGrid.innerHTML = list.map(product => generateProductCard(product)).join('');
   }
 
-  // --- LISTENERS ---
   sortSelect.addEventListener('change', filterAndRender);
   document.getElementById('apply-price').addEventListener('click', filterAndRender);
   document.getElementById('filter-sale').addEventListener('change', filterAndRender);
   document.getElementById('filter-new').addEventListener('change', filterAndRender);
-
 });

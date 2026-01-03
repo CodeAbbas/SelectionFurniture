@@ -20,20 +20,21 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('detail-desc').innerText = product.description || "Experience comfort and style with this premium furniture piece.";
   document.getElementById('detail-price').innerText = formatCurrency(product.price, product.currency);
 
+  // ---  CATEGORY BREADCRUMB ---
   const categoryEl = document.getElementById('detail-category');
-  
   let catText = "";
 
-  // 1. Handle Multiple Categories
-  if (product.categories && Array.isArray(product.categories)) {
-    // Join them nicely: "Bedroom / Wardrobes"
+  // 1. Categories
+  if (product.categories) {
     catText = product.categories.join(' / ');
-  } else if (product.category) {
-    catText = product.category;
+  } else {
+    catText = product.category || "Furniture";
   }
 
-  // 2. Append Subcategory if it exists
-  if (product.subcategory) {
+  // 2. Subcategories (Join with commas)
+  if (product.subcategories && product.subcategories.length > 0) {
+    catText += ` / ${product.subcategories.join(', ')}`;
+  } else if (product.subcategory) {
     catText += ` / ${product.subcategory}`;
   }
 
