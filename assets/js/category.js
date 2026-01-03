@@ -22,6 +22,24 @@ document.addEventListener("DOMContentLoaded", function() {
   initRichFilters();
   filterAndRender();
 
+  // --- HELPER: NORMALIZE DATA (Fixed) ---
+  function getSubcategories(p) {
+    // 1. Array? Return it (filtered for empty strings)
+    if (Array.isArray(p.subcategories)) {
+      return p.subcategories.filter(s => s && s.trim() !== '');
+    }
+    // 2. String? Return as array (if not empty)
+    if (typeof p.subcategories === 'string' && p.subcategories.trim() !== '') {
+      return [p.subcategories];
+    }
+    // 3. Old 'subcategory' field?
+    if (p.subcategory && p.subcategory.trim() !== '') {
+      return [p.subcategory];
+    }
+    // 4. Default empty
+    return [];
+  }
+
   // --- FUNCTIONS ---
 
   function initRichFilters() {
@@ -30,17 +48,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const hierarchy = {};
     
     products.forEach(p => {
-      // Handle Parent Categories (Array or String)
       const pCats = p.categories || (p.category ? [p.category] : []);
-      
-      // Handle Subcategories (Array or String or Empty)
-      const pSubs = p.subcategories || (p.subcategory ? [p.subcategory] : []);
+      const pSubs = getSubcategories(p); 
       
       pCats.forEach(catName => {
         if (!hierarchy[catName]) {
           hierarchy[catName] = new Set();
         }
-        // Add all subcategories to this parent in the tree
+        // Only add if subcategory is valid
         pSubs.forEach(sub => hierarchy[catName].add(sub));
       });
     });
@@ -88,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
       if (hasChildren) {
         const toggleBtn = li.querySelector('.filter-tree-parent');
         toggleBtn.addEventListener('click', (e) => {
+          // Prevent closing if clicking the checkbox itself
           if (e.target.type !== 'checkbox' && e.target.tagName !== 'LABEL') {
             li.classList.toggle('active');
           }
@@ -124,22 +140,17 @@ document.addEventListener("DOMContentLoaded", function() {
     if (activeParents.length > 0) {
       filtered = filtered.filter(p => {
         const pCats = p.categories || (p.category ? [p.category] : []);
-        // Normalize subcategories to an array
-        const pSubs = p.subcategories || (p.subcategory ? [p.subcategory] : []);
+        const pSubs = getSubcategories(p); 
         
         return activeParents.some(parentKey => {
-          // Does product belong to this parent category?
           if (!pCats.includes(parentKey)) return false;
 
           const group = activeFilters[parentKey];
 
-          // Logic: If sub-filters are checked, product must match AT LEAST ONE of them
           if (group.children.size > 0) {
-            // Check if any of product's subcategories are in the checked filters
             return pSubs.some(s => group.children.has(s));
           }
 
-          // If no sub-filters checked, but parent is checked, show all in parent
           if (group.parentChecked) return true;
 
           return false;
@@ -147,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
-    // --- PRICE, STATUS & SORTING (Keep Standard) ---
+    // --- PRICE & STATUS ---
     const min = document.getElementById('min-price').value;
     const max = document.getElementById('max-price').value;
     if(min) filtered = filtered.filter(p => p.price >= min);

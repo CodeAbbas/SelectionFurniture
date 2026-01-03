@@ -236,24 +236,7 @@ const products = [
     "is_new_arrival": false,
     "is_best_seller": true
   },
-  {
-    "id": "prod-105",
-    "name": "Pocket Watch Leather Pouch",
-    "category": "Watches",
-    "price": 150.00,
-    "original_price": 170.00,
-    "currency": "USD",
-    "rating": 4,
-    "images": {
-      "default": "./assets/images/products/watch-3.jpg",
-      "hover": "./assets/images/products/watch-4.jpg"
-    },
-    "badges": [
-      { "text": "new", "color": "pink", "type": "angle" } // Changed salmon-pink to pink
-    ],
-    "is_new_arrival": false,
-    "is_best_seller": false
-  },
+
 
   // --- BEDROOM SETS (Scraped Batch) ---
   {
@@ -430,7 +413,7 @@ const products = [
     "id": "bedroom-011",
     "name": "Half Moon Twin Cream",
     "categories": ["Bedroom", "Bedroom Sets"],
-    "subcategories": "Sets",
+    "subcategories": "High gloss",
     "description": "Cream finish set with unique half-moon detailing.",
     "long_description": "A soft, neutral cream set that fits any decor.<br><br><b>Features:</b><br>- Twin Bed Set<br>- Cream Finish<br>- Unique Headboard Design",
     "price": 1499.99,
@@ -529,7 +512,7 @@ const products = [
   {
     "id": "bed-001",
     "name": "Bunk Bed",
-    "categories": ["Bed", "Bedroom"],
+    "categories": ["Bedroom", "Bed"],
     "subcategories": "Bunk bed",
     "description": "Space-saving bunk bed, perfect for kids or guest rooms.",
     "long_description": "A sturdy and practical solution for shared bedrooms.<br><br><b>Features:</b><br><ul><li>Space-saving design</li><li>Sturdy construction</li><li>Safety rails included</li></ul>",
@@ -553,7 +536,7 @@ const products = [
   {
     "id": "bed-002",
     "name": "Dino Ottoman Storage Bed",
-    "categories": ["Bed", "Bedroom"],
+    "categories": ["Bedroom", "Bed"],
     "subcategories": ["Ottoman", "Lift up"],
     "description": "Stylish Dino bed with hidden ottoman storage.",
     "long_description": "Maximize your space with this ottoman storage bed.<br><br><b>Features:</b><br><ul><li>Lift-up storage mechanism</li><li>Modern Dino fabric finish</li><li>Spacious under-bed compartment</li></ul>",
@@ -575,8 +558,8 @@ const products = [
   {
     "id": "bed-003",
     "name": "Italian Cream Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": ["Ottoman", "Lift up"],
     "description": "Elegant Italian-style cream bed with storage.",
     "long_description": "Add a touch of Italian elegance to your bedroom.<br><br><b>Features:</b><br><ul><li>Premium Cream Finish</li><li>Integrated Storage</li><li>High Headboard</li></ul>",
     "price": 899.99,
@@ -598,7 +581,7 @@ const products = [
   {
     "id": "bed-004",
     "name": "Lido Ottoman Storage Bed",
-    "categories": ["Bed", "Bedroom"],
+    "categories": ["Bedroom", "Bed"],
     "subcategories": "Ottoman",
     "description": "Modern Lido bed frame with ottoman lift-up storage.",
     "long_description": "Contemporary design meets practical functionality.<br><br><b>Features:</b><br><ul><li>Ottoman Gas Lift</li><li>Upholstered Frame</li><li>Ample Storage Space</li></ul>",
@@ -620,15 +603,21 @@ const products = [
   {
     "id": "bed-005",
     "name": "Modo Ottoman Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": ["Ottoman", "Lift up"],
     "description": "Sleek Modo storage bed for a clutter-free bedroom.",
     "long_description": "Keep your bedroom organized with the Modo Ottoman bed.<br><br><b>Features:</b><br><ul><li>Easy-lift mechanism</li><li>Modern minimalist design</li><li>Full under-bed storage</li></ul>",
     "price": 899.99,
     "original_price": 1299.99,
     "currency": "GBP",
     "rating": 4,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Modo-Bed-Title.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Modo-Bed-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Modo-Storage-Bed-1-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Modo-Storage-Beds-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Lido-Bed-Title.jpg"
+    ],
     "badges": [],
     "is_new_arrival": false,
     "is_best_seller": false,
@@ -637,7 +626,7 @@ const products = [
   {
     "id": "bed-006",
     "name": "Selina Grey Bed",
-    "categories": ["Bed", "Bedroom"],
+    "categories": ["Bedroom", "Bed"],
     "subcategories": "",
     "description": "Luxurious Selina bed in a versatile grey finish.",
     "long_description": "A perfect centerpiece for any modern bedroom.<br><br><b>Features:</b><br><ul><li>Soft Grey Upholstery</li><li>Tufted Headboard Detail</li><li>Sturdy Frame</li></ul>",
@@ -645,7 +634,17 @@ const products = [
     "original_price": 1100.00,
     "currency": "GBP",
     "rating": 5,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Selina-Grey-Bed-Title.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Selina-Grey-Bed-03-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Selina-Grey-Bed-04.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Selina-Grey-Bed-02.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Selina-Grey-Bed-01.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/King-Size.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/King-Open-Size.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Double-Size.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2023/07/Double-Open-Size.jpg"
+    ],
     "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
     "is_new_arrival": false,
     "is_best_seller": true,
@@ -654,7 +653,7 @@ const products = [
   {
     "id": "bed-007",
     "name": "Rose Brown Storage Bed",
-    "categories": ["Bed", "Bedroom"],
+    "categories": ["Bedroom", "Bed"],
     "subcategories": "",
     "description": "Classic Rose bed in brown with convenient storage.",
     "long_description": "Timeless design with hidden practicality.<br><br><b>Features:</b><br><ul><li>Warm Brown Fabric</li><li>Storage Compartment</li><li>Elegant Headboard</li></ul>",
@@ -662,75 +661,37 @@ const products = [
     "original_price": 1299.99,
     "currency": "GBP",
     "rating": 4,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Rose-Purple-Bed-Title-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Rose-Purple-Bed.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Rose-Purple-Storage-Bed.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Rose-Storage-Bed.jpg"
+    ],
     "badges": [],
     "is_new_arrival": false,
     "is_best_seller": false,
     "actions": ["heart", "eye", "repeat", "bag"]
   },
-  {
-    "id": "bed-008",
-    "name": "Rose Ottoman Grey Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
-    "description": "Grey Rose ottoman bed combining style and storage.",
-    "long_description": "The popular Rose design now in a versatile grey ottoman.<br><br><b>Features:</b><br><ul><li>Gas Lift Storage</li><li>Grey Fabric Finish</li><li>Classic Button Detailing</li></ul>",
-    "price": 899.99,
-    "original_price": 1299.99,
-    "currency": "GBP",
-    "rating": 5,
-    "gallery": [],
-    "badges": [],
-    "is_new_arrival": false,
-    "is_best_seller": true,
-    "actions": ["heart", "eye", "repeat", "bag"]
-  },
-  {
-    "id": "bed-009",
-    "name": "Rose Ottoman Purple Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
-    "description": "Bold purple Rose ottoman bed for a statement look.",
-    "long_description": "Add a pop of color with this vibrant purple storage bed.<br><br><b>Features:</b><br><ul><li>Vibrant Purple Upholstery</li><li>Ottoman Storage</li><li>High Headboard</li></ul>",
-    "price": 899.99,
-    "original_price": 1299.99,
-    "currency": "GBP",
-    "rating": 5,
-    "gallery": [],
-    "badges": [],
-    "is_new_arrival": false,
-    "is_best_seller": false,
-    "actions": ["heart", "eye", "repeat", "bag"]
-  },
-  {
-    "id": "bed-010",
-    "name": "Selina Bed Beige Color",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
-    "description": "Soft beige Selina bed for a warm, neutral room.",
-    "long_description": "Create a cozy sanctuary with this beige upholstered bed.<br><br><b>Features:</b><br><ul><li>Neutral Beige Tone</li><li>Soft Touch Fabric</li><li>Elegant Design</li></ul>",
-    "price": 599.99,
-    "original_price": 700.00,
-    "currency": "GBP",
-    "rating": 4,
-    "gallery": [],
-    "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
-    "is_new_arrival": false,
-    "is_best_seller": false,
-    "actions": ["heart", "eye", "repeat", "bag"]
-  },
+
+
   {
     "id": "bed-011",
     "name": "Turkish Cream Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": ["Ottoman", "Lift up"],
     "description": "Luxurious Turkish style cream bed with storage.",
     "long_description": "Opulent design inspired by Turkish aesthetics.<br><br><b>Features:</b><br><ul><li>Cream Finish</li><li>Ornate Detailing</li><li>Under-bed Storage</li></ul>",
     "price": 899.99,
     "original_price": 1299.99,
     "currency": "GBP",
     "rating": 5,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Turkish-Storage-Bed-Title.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Turkish-Cream-Bed-.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Turkish-Storage-Bed-.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Turkish-Storage-Cream-Bed-.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/10/Rose-Purple-Bed-Title-1.jpg"
+    ],
     "badges": [],
     "is_new_arrival": false,
     "is_best_seller": false,
@@ -739,15 +700,22 @@ const products = [
   {
     "id": "bed-012",
     "name": "Dream High Gloss Ottoman Storage Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": ["High gloss", "Lift up"],
     "description": "Modern high gloss bed with ottoman functionality.",
     "long_description": "A sleek, reflective finish for contemporary homes.<br><br><b>Features:</b><br><ul><li>High Gloss Finish</li><li>Ottoman Storage</li><li>Easy to Clean</li></ul>",
     "price": 1600.00,
     "original_price": 1700.00,
     "currency": "GBP",
     "rating": 5,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/08/Ruby-High-Gloss-Bed-Inside.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/08/Ruby-Bed-Title.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/08/Ruby-Grey-Bed.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/08/Ruby-White-Bed.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2022/08/Ruby-Black-Bed.jpg"
+
+    ],
     "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
     "is_new_arrival": true,
     "is_best_seller": false,
@@ -756,15 +724,20 @@ const products = [
   {
     "id": "bed-013",
     "name": "French Chesterfield Bed",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": ["High gloss", "Lift up"],
     "description": "Classic French Chesterfield style upholstered bed.",
     "long_description": "Timeless elegance with deep button tufting.<br><br><b>Features:</b><br><ul><li>Chesterfield Scroll Design</li><li>Buttoned Headboard</li><li>Luxurious Fabric</li></ul>",
     "price": 599.99,
     "original_price": 699.99,
     "currency": "GBP",
     "rating": 5,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/french-chesterfield-bed-title.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/french-chesterfield-bed-4-1.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/french-chesterfield-bed-2.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/french-chesterfield-bed-3.jpg"
+    ],
     "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
     "is_new_arrival": false,
     "is_best_seller": true,
@@ -773,15 +746,18 @@ const products = [
   {
     "id": "bed-014",
     "name": "Walnut Bedroom Set (Black Leather)",
-    "categories": ["Bed", "Bedroom"],
-    "subcategories": "",
+    "categories": ["Bedroom", "Bed"],
+    "subcategories": "Ottoman",
     "description": "Walnut finish bed with black leather accents.",
     "long_description": "A bold combination of wood and leather textures.<br><br><b>Features:</b><br><ul><li>Walnut Wood Finish</li><li>Faux Leather Padding</li><li>Modern Profile</li></ul>",
     "price": 1499.99,
     "original_price": 1999.99,
     "currency": "GBP",
     "rating": 4,
-    "gallery": [],
+    "gallery": [
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/2-19.jpg",
+      "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/1-19.jpg"
+    ],
     "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
     "is_new_arrival": false,
     "is_best_seller": false,

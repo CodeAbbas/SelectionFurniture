@@ -109,23 +109,27 @@ function generateProductCard(product) {
   }
   // Category 
   let displayCategory = "Furniture";
-  
+
   if (product.categories && product.categories.length > 0) {
-    // 1. Get Main Category: Prefer 2nd item (e.g., "Wardrobes"), else 1st ("Bedroom")
     const mainCat = product.categories.length > 1 ? product.categories[1] : product.categories[0];
-    
-    // 2. Combine with Subcategory
-    if (product.subcategory) {
-      displayCategory = `${mainCat} / ${product.subcategory}`;
+
+    // SAFE Subcategory Check
+    let subCat = "";
+    if (Array.isArray(product.subcategories) && product.subcategories.length > 0) {
+      subCat = product.subcategories[0];
+    } else if (typeof product.subcategories === 'string') {
+      subCat = product.subcategories;
+    } else if (product.subcategory) {
+      subCat = product.subcategory;
+    }
+
+    if (subCat) {
+      displayCategory = `${mainCat} / ${subCat}`;
     } else {
       displayCategory = mainCat;
     }
   } else if (product.category) {
-    // Fallback for older products
     displayCategory = product.category;
-    if (product.subcategory) {
-      displayCategory += ` / ${product.subcategory}`;
-    }
   }
   // Handle badges
   let badgeHtml = '';
@@ -135,7 +139,7 @@ function generateProductCard(product) {
     });
   }
 
-  // UPDATED: Use formatCurrency for price
+  // formatCurrency for price
   const priceHtml = `
     <div class="price-box">
       <p class="price">${formatCurrency(product.price, product.currency)}</p>

@@ -31,11 +31,18 @@ document.addEventListener("DOMContentLoaded", function() {
     catText = product.category || "Furniture";
   }
 
-  // 2. Subcategories (Join with commas)
-  if (product.subcategories && product.subcategories.length > 0) {
-    catText += ` / ${product.subcategories.join(', ')}`;
+  // 2. Subcategories (Safe Check)
+  let subCats = [];
+  if (Array.isArray(product.subcategories)) {
+    subCats = product.subcategories;
+  } else if (typeof product.subcategories === 'string') {
+    subCats = [product.subcategories];
   } else if (product.subcategory) {
-    catText += ` / ${product.subcategory}`;
+    subCats = [product.subcategory];
+  }
+
+  if (subCats.length > 0) {
+    catText += ` / ${subCats.join(', ')}`;
   }
 
   categoryEl.innerText = catText;
