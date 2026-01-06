@@ -16,9 +16,10 @@ const products = [
     "id": "hero-002",
     "type": "banner",
     "name": "Sycylia High Gloss Sliding Door Wardrobe New Branding",
-    "category": "Accessories",
+    "categories": ["Wardrobes"],
+    "subcategory":"Sliding",
     "description": "Stylish protection for sunny days.",
-    "price": 15.00,
+    "price": 399.00,
     "currency": "USD",
     "image": "https://slidingwardrobes4u.com/wp-content/uploads/2025/06/White-sycylia-3-door-with-LED-Light-sliding-door-1536x1536.jpg",
     "link": "#",
@@ -673,7 +674,6 @@ const products = [
     "actions": ["heart", "eye", "repeat", "bag"]
   },
 
-
   {
     "id": "bed-011",
     "name": "Turkish Cream Storage Bed",
@@ -757,6 +757,116 @@ const products = [
     "gallery": [
       "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/2-19.jpg",
       "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/1-19.jpg"
+    ],
+    "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
+    "is_new_arrival": false,
+    "is_best_seller": false,
+    "actions": ["heart", "eye", "repeat", "bag"]
+  },
+
+
+  // --- Mattress ---
+    //-- Spring --
+  {
+    "id": "mattress-001",
+    "name": "Mirage Pocket Spring Divan",
+    "categories": ["Mattress"],
+    "subcategory": "Pocket spring",
+    "description": "Firm pocket spring divan with memory foam layers and edge-to-edge support.",
+    "long_description": "The Mirage is a premium single-sided mattress and divan set designed for superior comfort and durability.<br><br><b>Key Features:</b><br><ul><li><b>Support:</b> Up to 2000 pocket springs for tailored support.</li><li><b>Comfort:</b> Three foam layers, including memory foam and deep support foam.</li><li><b>Finish:</b> Soft-touch knitted fabric with hand-tufted detailing.</li><li><b>Structure:</b> Foam encapsulated for edge-to-edge durability.</li></ul><br><b>Specifications:</b><br>- Handcrafted in the UK<br>- Mattress Depth: Approx 31cm<br>- Firmness: Firm",
+    "price": 499.00,
+    "original_price": 0,
+    "currency": "GBP",
+    "rating": 5,
+    "gallery": [
+      "https://www.albabeds.co.uk/assets/divans/view/mirage-view.jpg?v=20260106123820",
+      "https://www.albabeds.co.uk/assets/divans/mirage-image.jpg?v=20260106123820",
+      "https://www.albabeds.co.uk/assets/divans/extras/mirage-matt-image.jpg?v=20260106123820"
+    ],
+    "badges": [],
+    "is_new_arrival": false,
+    "is_best_seller": false,
+    "actions": ["heart", "eye", "repeat", "bag"]
+  },
+  {
+    "id": "mattress-002",
+    "name": "Air Flow 2000 Divan",
+    "categories": ["Mattress"],
+    "subcategory": "Pocket spring",
+    "description": "Medium to Firm pocket spring bed with luxury pillowtop for breathable comfort.",
+    "long_description": "Experience advanced airflow technology with this premium divan.<br><br><b>Key Features:</b><br><ul><li><b>Spring Count:</b> 2000 Pocket Springs</li><li><b>Comfort Grade:</b> Medium to Firm</li><li><b>Top Layer:</b> Luxury Pillowtop for added softness</li><li><b>Technology:</b> Air Flow system for temperature regulation</li></ul>",
+    "price": 549.00,
+    "original_price": 0,
+    "currency": "GBP",
+    "rating": 5,
+    "gallery": [
+      "https://www.albabeds.co.uk/assets/divans/view/air-flow-view.jpg?v=20260106134026",
+      "https://www.albabeds.co.uk/assets/divans/air-flow-image.jpg?v=20260106134026",
+      "https://www.albabeds.co.uk/assets/divans/extras/air-flow-2000-matt-image.jpg?v=20260106134026"
+    ],
+    "badges": [{ "text": "best seller", "color": "orange", "type": "angle" }],
+    "is_new_arrival": false,
+    "is_best_seller": true,
+    "actions": ["heart", "eye", "repeat", "bag"]
+  },
+  {
+    "id": "mattress-003",
+    "name": "Ella 3000 Divan",
+    "categories": ["Mattress"],
+    "subcategory": "Pocket spring",
+    "description": "Premium firm to extra firm mattress with 3000 pocket springs.",
+    "long_description": "The Ella 3000 offers superior orthopedic support for those who prefer a firmer sleep surface.<br><br><b>Key Features:</b><br><ul><li><b>Spring Count:</b> 3000 Pocket Springs</li><li><b>Comfort Grade:</b> Firm to Extra Firm</li><li><b>Support:</b> High-density filling for back support</li><li><b>Finish:</b> Durable hand-tufted cover</li></ul>",
+    "price": 649.00,
+    "original_price": 0,
+    "currency": "GBP",
+    "rating": 5,
+    "gallery": [
+      "https://www.albabeds.co.uk/assets/divans/view/ella-view.jpg?v=20260106145548",
+      "https://www.albabeds.co.uk/assets/divans/ella-image.jpg?v=20260106145548",
+      "https://www.albabeds.co.uk/assets/divans/extras/ella-matt-image.jpg?v=20260106145548"
+    ],
+    "badges": [],
+    "is_new_arrival": true,
+    "is_best_seller": false,
+    "actions": ["heart", "eye", "repeat", "bag"]
+  },
+  {
+    "id": "mattress-004",
+    "name": "Harmony Divan",
+    "categories": ["Mattress"],
+    "subcategory": "Pocket spring",
+    "description": "Balanced medium to firm pocket spring divan for everyday comfort.",
+    "long_description": "Achieve perfect harmony in your sleep with this balanced divan set.<br><br><b>Key Features:</b><br><ul><li><b>Support:</b> Pocket Spring System</li><li><b>Comfort Grade:</b> Medium to Firm</li><li><b>Design:</b> Classic tufted finish</li><li><b>Durability:</b> Reinforced edge support</li></ul>",
+    "price": 449.00,
+    "original_price": 0,
+    "currency": "GBP",
+    "rating": 4,
+    "gallery": [
+      "https://www.albabeds.co.uk/assets/divans/view/harmony-view.jpg?v=20260106152711",
+      "https://www.albabeds.co.uk/assets/divans/harmony-image.jpg?v=20260106152711",
+      "https://www.albabeds.co.uk/assets/divans/extras/harmony-matt-image.jpg?v=20260106152711"
+    ]
+    ,
+    "badges": [],
+    "is_new_arrival": false,
+    "is_best_seller": false,
+    "actions": ["heart", "eye", "repeat", "bag"]
+  },
+  {
+    "id": "mattress-005",
+    "name": "Newby Divan",
+    "categories": ["Mattress"],
+    "subcategory": "Pocket spring",
+    "description": "Medium comfort pocket spring divan, perfect for a soft yet supportive feel.",
+    "long_description": "The Newby provides a softer, cloud-like feel without compromising on support.<br><br><b>Key Features:</b><br><ul><li><b>Support:</b> Individual Pocket Springs</li><li><b>Comfort Grade:</b> Medium</li><li><b>Ideal For:</b> Side sleepers</li><li><b>Finish:</b> Soft-touch fabric</li></ul>",
+    "price": 429.00,
+    "original_price": 0,
+    "currency": "GBP",
+    "rating": 4,
+    "gallery": [
+      "https://www.albabeds.co.uk/assets/divans/view/newby-view.jpg?v=20260106150951",
+      "https://www.albabeds.co.uk/assets/divans/newby-image.jpg?v=20260106150951",
+      "https://www.albabeds.co.uk/assets/divans/extras/newby-matt-image.jpg?v=20260106150951"
     ],
     "badges": [{ "text": "sale", "color": "eerie-black", "type": "angle" }],
     "is_new_arrival": false,

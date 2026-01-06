@@ -22,22 +22,33 @@ document.addEventListener("DOMContentLoaded", function() {
   initRichFilters();
   filterAndRender();
 
-  // --- HELPER: NORMALIZE DATA (Fixed) ---
+  // --- Title Case String ---
+  function toTitleCase(str) {
+    if (!str) return null;
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+  // ---NORMALIZE DATA (Fixed & Case Normalized) ---
   function getSubcategories(p) {
-    // 1. Array? Return it (filtered for empty strings)
+    let rawSubs = [];
+    
+    // 1. Collect raw data
     if (Array.isArray(p.subcategories)) {
-      return p.subcategories.filter(s => s && s.trim() !== '');
+      rawSubs = p.subcategories;
+    } else if (typeof p.subcategories === 'string' && p.subcategories.trim() !== '') {
+      rawSubs = [p.subcategories];
+    } else if (p.subcategory && p.subcategory.trim() !== '') {
+      rawSubs = [p.subcategory];
     }
-    // 2. String? Return as array (if not empty)
-    if (typeof p.subcategories === 'string' && p.subcategories.trim() !== '') {
-      return [p.subcategories];
-    }
-    // 3. Old 'subcategory' field?
-    if (p.subcategory && p.subcategory.trim() !== '') {
-      return [p.subcategory];
-    }
-    // 4. Default empty
-    return [];
+
+    // 2. Filter empty strings AND Normalize to Title Case
+    return rawSubs
+      .filter(s => s && s.trim() !== '')
+      .map(s => toTitleCase(s.trim()));
   }
 
   // --- FUNCTIONS ---
