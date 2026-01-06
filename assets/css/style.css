@@ -3119,6 +3119,7 @@ footer {
 
 
 
+
   /**
    * #FOOTER
    */
@@ -3135,8 +3136,6 @@ footer {
   .footer-bottom { margin-bottom: 0; }
 
 }
-
-
 
 
 
@@ -3238,8 +3237,8 @@ footer {
   .blog { margin-bottom: 50px; }
   
   .blog-card { min-width: -webkit-calc(25% - 22.5px); min-width: calc(25% - 22.5px); }
-
-
+  .mobile-sidebar-only {
+    display: none !important;}
 
   /**
    * #FOOTER
