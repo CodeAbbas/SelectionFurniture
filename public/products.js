@@ -872,6 +872,39 @@ const products = [
     "is_new_arrival": false,
     "is_best_seller": false,
     "actions": ["heart", "eye", "repeat", "bag"]
-  }
+  },
+  //test
+  {
+  "id": "5b1acf14-e422-11ed-bcc9-7486e2336f1d",
+  "name": "Newby Pocket Spring Divan Bed",
+  "categories": [
+    "Bedroom",
+    "Divans",
+    "Pocket Spring"
+  ],
+  "subcategory": "Pocket Spring Divan",
+  "subcategories": [
+    "Pocket Spring",
+    "Divan"
+  ],
+  "description": "Experience superior comfort and support with the Newby Pocket Spring Divan Bed, designed for a restful night's sleep.",
+  "long_description": "<p>The <b>Newby Pocket Spring Divan Bed</b> offers an exceptional sleep experience, combining traditional craftsmanship with modern comfort. Each pocket spring works independently to contour to your body's unique shape, providing targeted support and minimizing motion transfer.</p><ul><li><b>Individual Pocket Springs:</b> Hundreds of individual springs respond to your body's contours.</li><li><b>Luxurious Fillings:</b> Generous layers of high-quality fillings for enhanced comfort.</li><li><b>Sturdy Divan Base:</b> A robust and durable base provides excellent support for the mattress.</li><li><b>Variety of Storage Options:</b> Available with various drawer configurations to suit your needs.</li><li><b>Hypoallergenic:</b> Designed to be resistant to allergens, promoting a healthier sleep environment.</li></ul><p>Perfect for any bedroom, the Newby Divan Bed is upholstered in a stylish fabric, adding a touch of elegance to your space. Choose from a range of sizes to find your perfect fit.</p>",
+  "price": 499.99,
+  "currency": "GBP",
+  "rating": 4.8,
+  "gallery": [
+    "https://www.albabeds.co.uk/images/products/newby-divan-bed-1.jpg",
+    "https://www.albabeds.co.uk/images/products/newby-divan-bed-2.jpg",
+    "https://www.albabeds.co.uk/images/products/newby-divan-bed-3.jpg"
+  ],
+  "is_new_arrival": false,
+  "is_best_seller": false,
+  "actions": [
+    "heart",
+    "eye",
+    "repeat",
+    "bag"
+  ]
+},
 
 ];

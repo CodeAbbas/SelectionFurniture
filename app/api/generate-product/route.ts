@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 
     // 3. GENERATE WITH AI
     const result = await generateObject({
-      model: google('gemini-1.5-flash-001'), 
+      model: google('gemini-2.5-flash'),
       schema: ProductSchema,
       prompt: `
         SOURCE URL: ${url || 'None'}
