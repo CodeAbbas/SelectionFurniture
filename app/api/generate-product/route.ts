@@ -5,7 +5,7 @@ import { ProductSchema } from '../../../lib/productSchema';
 
 export const maxDuration = 60;
 
-// --- YOUR WEBSITE STRUCTURE (The Rulebook) ---
+// --- WEBSITE STRUCTURE (The Rulebook) ---
 const WEBSITE_TAXONOMY = {
   "Sofa": ["Sofa bed", "Corner sofa", "Corner Sofa Bed", "Recliner", "Armchair"],
   "Beds": ["Divan", "Velvet", "High gloss", "Bunk bed"],
@@ -46,8 +46,21 @@ export async function POST(req: Request) {
         if (scraperResponse.ok) {
           const data = await scraperResponse.json();
           if (data.success && Array.isArray(data.data)) {
-            scrapedImages = data.data.map((img: any) => img.cleanUrl || img.url);
-            console.log(`✅ Scraper found ${scrapedImages.length} images`);
+            
+            // --- FILTER OUT LOGOS & JUNK ---
+            const allImages = data.data.map((img: any) => img.cleanUrl || img.url);
+            
+            scrapedImages = allImages.filter((link: string) => {
+              const lower = link.toLowerCase();
+              return !lower.includes('logo') && 
+                     !lower.includes('icon') && 
+                     !lower.includes('favicon') &&
+                     !lower.includes('loader') &&
+                     !lower.includes('placeholder') &&
+                     !lower.includes('svg'); 
+            });
+
+            console.log(`✅ Scraper found ${allImages.length} raw images -> Filtered to ${scrapedImages.length} clean images`);
           }
         }
       } catch (err) {
@@ -78,7 +91,7 @@ export async function POST(req: Request) {
 
         2. **GALLERY:** Return an EMPTY array []. (I will inject real images via code).
         
-        3. **DESCRIPTION:** Write a professional  description, long_description HTML(<ul>, <b>). No Markdown.
+        3. **DESCRIPTION:** Write a professional description, long_description HTML(<ul>, <b>). No Markdown.
         4. **DETAILS:** Infer Name, Price (GBP), and specs from the URL.
       `,
     });

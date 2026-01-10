@@ -877,22 +877,18 @@ const products = [
 
   //Sofa
   {
-  "id": "sofa-laguna-001",
+  "id": "laguna-corner-sofa",
   "name": "Laguna Corner Sofa",
   "categories": [
     "Sofa"
   ],
-  "subcategories": [
-    "Corner sofa"
-  ],
-  "description": "The Laguna Corner Sofa offers a perfect blend of comfort and modern style, designed to enhance any living space. Its spacious design provides ample seating for family and guests, making it an ideal choice for contemporary homes.",
-  "long_description": "The Laguna Corner Sofa is crafted with both aesthetics and comfort in mind, providing a luxurious seating experience.<ul><li><b>Contemporary Design:</b> Features a sleek, modern aesthetic that complements various interior decors.</li><li><b>Spacious Seating:</b> Generously sized to accommodate multiple people comfortably, perfect for entertaining or relaxing.</li><li><b>Premium Comfort:</b> Upholstered with high-quality fabric and cushioned for exceptional support and softness.</li><li><b>Durable Construction:</b> Built with a robust frame to ensure long-lasting stability and durability.</li><li><b>Versatile Configuration:</b> Designed to fit seamlessly into corner spaces, optimizing your living room layout.</li></ul>Elevate your home with the Laguna Corner Sofa, where style meets unparalleled comfort.",
-  "price": 899.99,
+  "subcategories": "Corner sofa",
+  "description": "Experience ultimate comfort and modern style with the Laguna Corner Sofa. Designed to be the centerpiece of your living room, this sofa offers generous seating and a contemporary aesthetic that complements any decor.",
+  "long_description": "<ul><li><b>Contemporary Design:</b> The Laguna Corner Sofa boasts a sleek, modern design that effortlessly enhances any living space. Its clean lines and sophisticated silhouette make it a stylish addition to your home.</li><li><b>Supreme Comfort:</b> Sink into plush, deep-filled cushions and enjoy exceptional comfort. The supportive backrests are designed for relaxation, making it perfect for unwinding after a long day or entertaining guests.</li><li><b>Durable Construction:</b> Crafted with a robust frame and high-quality upholstery, the Laguna Corner Sofa is built for longevity. Its durable materials ensure it withstands daily use while maintaining its elegant appearance.</li><li><b>Versatile Configuration:</b> Ideal for various room layouts, this corner sofa provides ample seating without compromising on style. It's perfect for families, movie nights, or simply lounging in luxury.</li><li><b>Available in Multiple Colors:</b> Personalize your living space with a choice of colors to match your interior design preferences. (Refer to visual samples for color options).</li></ul>",
+  "price": 999.99,
   "currency": "GBP",
   "rating": 5,
   "gallery": [
-    "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/SlidingWardrobe4ULOGO-ezgif.com-webp-to-jpg-converter-removebg-preview.png",
-    "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/Sliding-Wardrobe-4U-LOGO.webp",
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-title-1-scaled.jpg",
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-1.jpg",
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors.jpg",
@@ -905,7 +901,9 @@ const products = [
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/sofabed-1.jpg",
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/storage-space-4.jpg",
     "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimesions-01.jpg",
-    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimensions-01-3.jpg"
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimensions-01-3.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/storage-space-6.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/sofabed-3.jpg"
   ],
   "is_new_arrival": false,
   "is_best_seller": false,
