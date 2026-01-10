@@ -9,10 +9,10 @@ export async function POST(req: Request) {
     // 1. Connect to MongoDB
     await dbConnect();
 
-    // 2. Check if product exists 
+    // 2. Check if product exists (Upsert logic)
     const product = await Product.findOneAndUpdate(
-      { id: body.id },
-      body,
+      { id: body.id } as any, 
+      body,            
       { upsert: true, new: true, runValidators: true } 
     );
 
