@@ -1,18 +1,22 @@
 import { z } from 'zod';
 
 export const ProductSchema = z.object({
-  id: z.string().describe("Unique ID (e.g., 'bed-001', 'mattress-005')"),
+  id: z.string().describe("Unique ID (e.g., 'bed-001', 'sofa-001', 'wardrobe-001')"),
   name: z.string(),
   
-  // Categorization
-  categories: z.array(z.string()).describe("Main categories, e.g. ['Bedroom', 'Bed']"),
+  // Strict Category Limits
+  categories: z.array(z.string())
+    .max(3) 
+    .describe("Main Category from website menu (e.g. 'Sofa', 'Beds'). Max 3."),
   
-  // Allow BOTH singular and plural to handle your mixed data structure safely
-  subcategory: z.union([z.string(), z.array(z.string())]).optional(),
-  subcategories: z.union([z.string(), z.array(z.string())]).optional().describe("Specific subcat, e.g. ['Ottoman', 'Lift up']"),
+  // Strict Subcategory Limits
+  subcategories: z.union([
+    z.string(), 
+    z.array(z.string()).max(3)
+  ]).optional().describe("Specific types (e.g. 'Divan', 'Corner sofa') /. Max 3."),
   
-  description: z.string().describe("Short summary for grid view"),
-  long_description: z.string().describe("HTML formatted details with <b>, <ul>, <li>. Do NOT use markdown."),
+  description: z.string(),
+  long_description: z.string(),
   
   price: z.number(),
   original_price: z.number().optional(),
@@ -20,14 +24,13 @@ export const ProductSchema = z.object({
   
   rating: z.number().min(0).max(5).default(5),
   
-  // The crucial part: The Gallery Array
-  gallery: z.array(z.string()).describe("Array of high-res image URLs"),
+  gallery: z.array(z.string()).max(15),
   
   badges: z.array(z.object({
     text: z.string(),
     color: z.string(),
     type: z.string().optional()
-  })).optional(),
+  })).max(3).optional(),
   
   is_new_arrival: z.boolean().default(false),
   is_best_seller: z.boolean().default(false),

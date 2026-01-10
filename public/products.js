@@ -874,28 +874,38 @@ const products = [
     "actions": ["heart", "eye", "repeat", "bag"]
   },
   //test
+
+  //Sofa
   {
-  "id": "5b1acf14-e422-11ed-bcc9-7486e2336f1d",
-  "name": "Newby Pocket Spring Divan Bed",
+  "id": "sofa-laguna-001",
+  "name": "Laguna Corner Sofa",
   "categories": [
-    "Bedroom",
-    "Divans",
-    "Pocket Spring"
+    "Sofa"
   ],
-  "subcategory": "Pocket Spring Divan",
   "subcategories": [
-    "Pocket Spring",
-    "Divan"
+    "Corner sofa"
   ],
-  "description": "Experience superior comfort and support with the Newby Pocket Spring Divan Bed, designed for a restful night's sleep.",
-  "long_description": "<p>The <b>Newby Pocket Spring Divan Bed</b> offers an exceptional sleep experience, combining traditional craftsmanship with modern comfort. Each pocket spring works independently to contour to your body's unique shape, providing targeted support and minimizing motion transfer.</p><ul><li><b>Individual Pocket Springs:</b> Hundreds of individual springs respond to your body's contours.</li><li><b>Luxurious Fillings:</b> Generous layers of high-quality fillings for enhanced comfort.</li><li><b>Sturdy Divan Base:</b> A robust and durable base provides excellent support for the mattress.</li><li><b>Variety of Storage Options:</b> Available with various drawer configurations to suit your needs.</li><li><b>Hypoallergenic:</b> Designed to be resistant to allergens, promoting a healthier sleep environment.</li></ul><p>Perfect for any bedroom, the Newby Divan Bed is upholstered in a stylish fabric, adding a touch of elegance to your space. Choose from a range of sizes to find your perfect fit.</p>",
-  "price": 499.99,
+  "description": "The Laguna Corner Sofa offers a perfect blend of comfort and modern style, designed to enhance any living space. Its spacious design provides ample seating for family and guests, making it an ideal choice for contemporary homes.",
+  "long_description": "The Laguna Corner Sofa is crafted with both aesthetics and comfort in mind, providing a luxurious seating experience.<ul><li><b>Contemporary Design:</b> Features a sleek, modern aesthetic that complements various interior decors.</li><li><b>Spacious Seating:</b> Generously sized to accommodate multiple people comfortably, perfect for entertaining or relaxing.</li><li><b>Premium Comfort:</b> Upholstered with high-quality fabric and cushioned for exceptional support and softness.</li><li><b>Durable Construction:</b> Built with a robust frame to ensure long-lasting stability and durability.</li><li><b>Versatile Configuration:</b> Designed to fit seamlessly into corner spaces, optimizing your living room layout.</li></ul>Elevate your home with the Laguna Corner Sofa, where style meets unparalleled comfort.",
+  "price": 899.99,
   "currency": "GBP",
-  "rating": 4.8,
+  "rating": 5,
   "gallery": [
-    "https://www.albabeds.co.uk/images/products/newby-divan-bed-1.jpg",
-    "https://www.albabeds.co.uk/images/products/newby-divan-bed-2.jpg",
-    "https://www.albabeds.co.uk/images/products/newby-divan-bed-3.jpg"
+    "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/SlidingWardrobe4ULOGO-ezgif.com-webp-to-jpg-converter-removebg-preview.png",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2024/04/Sliding-Wardrobe-4U-LOGO.webp",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-title-1-scaled.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-1.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-3.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-2.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-4.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/laguna-colors-5.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimensions-01.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Laguna-sofabed-Branding.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/sofabed-1.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/storage-space-4.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimesions-01.jpg",
+    "https://slidingwardrobes4u.com/wp-content/uploads/2021/03/Dimensions-01-3.jpg"
   ],
   "is_new_arrival": false,
   "is_best_seller": false,
