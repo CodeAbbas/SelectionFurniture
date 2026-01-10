@@ -12,9 +12,6 @@
     "@ai-sdk/google": "^0.0.55",
     "ai": "^3.4.33",
     "next": "^16.1.1",
-    "puppeteer": "^24.34.0",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "zod": "^3.25.76"
