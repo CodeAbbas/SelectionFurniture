@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const filterListContainer = document.getElementById('category-filter-list');
   
   // State
-  let currentProducts = [...products]; 
+  let currentProducts = []; 
   
   // 1. READ URL PARAMS
   const urlParams = new URLSearchParams(window.location.search);
@@ -18,25 +18,58 @@ document.addEventListener("DOMContentLoaded", function() {
   if (urlCategory) {
     breadcrumb.innerText = urlSubcategory ? `${urlCategory} / ${urlSubcategory}` : urlCategory;
   }
-  
-  initRichFilters();
-  filterAndRender();
 
-  // --- Title Case String ---
+  // --- FETCH FUNCTION ---
+  async function fetchProducts() {
+    try {
+      productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 40px; color: var(--sonic-silver);">Loading products...</div>';
+      
+      let apiUrl = '/api/products';
+      const params = new URLSearchParams();
+      if (urlCategory) params.append('category', urlCategory);
+      if (urlSubcategory) params.append('subcategory', urlSubcategory);
+      
+      const fullUrl = params.toString() ? `${apiUrl}?${params.toString()}` : apiUrl;
+
+      const response = await fetch(fullUrl);
+      if (!response.ok) throw new Error("API Connection Error");
+      
+      const dbData = await response.json();
+
+      // --- THE FIX: ADAPTER ---
+      // We convert the DB format to match exactly what your old 'products.js' had.
+      // This ensures your generic card design works without changes.
+      currentProducts = dbData.map(p => ({
+        ...p, // Keep all properties
+        // 1. Fix Image: If DB has 'gallery', use the first image as 'image'
+        image: (p.gallery && p.gallery.length > 0) ? p.gallery[0] : (p.image || './assets/images/products/1.jpg'),
+        // 2. Fix ID: Ensure 'id' exists (MongoDB uses '_id')
+        id: p.id || p._id,
+        // 3. Ensure price is a number for sorting
+        price: Number(p.price),
+        original_price: Number(p.original_price)
+      }));
+      
+      // Now we pass this "clean" data to your existing functions
+      initRichFilters();
+      filterAndRender();
+
+    } catch (err) {
+      console.error(err);
+      productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:red; padding: 40px;">Could not load products.</div>';
+    }
+  }
+
+  fetchProducts();
+
+  // --- HELPER FUNCTIONS ---
   function toTitleCase(str) {
     if (!str) return null;
-    return str.replace(
-      /\w\S*/g,
-      function(txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-      }
-    );
+    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
   }
-  // ---NORMALIZE DATA (Fixed & Case Normalized) ---
+
   function getSubcategories(p) {
     let rawSubs = [];
-    
-    // 1. Collect raw data
     if (Array.isArray(p.subcategories)) {
       rawSubs = p.subcategories;
     } else if (typeof p.subcategories === 'string' && p.subcategories.trim() !== '') {
@@ -44,44 +77,30 @@ document.addEventListener("DOMContentLoaded", function() {
     } else if (p.subcategory && p.subcategory.trim() !== '') {
       rawSubs = [p.subcategory];
     }
-
-    // 2. Filter empty strings AND Normalize to Title Case
-    return rawSubs
-      .filter(s => s && s.trim() !== '')
-      .map(s => toTitleCase(s.trim()));
+    return rawSubs.filter(s => s && s.trim() !== '').map(s => toTitleCase(s.trim()));
   }
-
-  // --- FUNCTIONS ---
 
   function initRichFilters() {
     filterListContainer.innerHTML = ''; 
-    
     const hierarchy = {};
     
-    products.forEach(p => {
+    currentProducts.forEach(p => {
       const pCats = p.categories || (p.category ? [p.category] : []);
       const pSubs = getSubcategories(p); 
       
       pCats.forEach(catName => {
-        if (!hierarchy[catName]) {
-          hierarchy[catName] = new Set();
-        }
-        // Only add if subcategory is valid
+        if (!hierarchy[catName]) hierarchy[catName] = new Set();
         pSubs.forEach(sub => hierarchy[catName].add(sub));
       });
     });
 
-    // Render HTML Tree
     Object.keys(hierarchy).sort().forEach(cat => {
       const subcats = Array.from(hierarchy[cat]).sort();
       const hasChildren = subcats.length > 0;
       
       const li = document.createElement('li');
       li.className = 'filter-tree-item';
-      
-      const isExpanded = (cat === urlCategory);
-      if(isExpanded) li.classList.add('active');
-
+      if(cat === urlCategory) li.classList.add('active');
       const parentChecked = (cat === urlCategory && !urlSubcategory) ? 'checked' : '';
 
       let html = `
@@ -91,8 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <label>${cat}</label>
           </div>
           ${hasChildren ? '<ion-icon name="chevron-down-outline" class="toggle-icon"></ion-icon>' : ''}
-        </div>
-      `;
+        </div>`;
 
       if (hasChildren) {
         html += `<ul class="filter-tree-children">`;
@@ -102,8 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <li class="sub-item">
               <input type="checkbox" class="filter-checkbox sub-filter" data-parent="${cat}" value="${sub}" ${subChecked}>
               <label>${sub}</label>
-            </li>
-          `;
+            </li>`;
         });
         html += `</ul>`;
       }
@@ -112,9 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
       filterListContainer.appendChild(li);
 
       if (hasChildren) {
-        const toggleBtn = li.querySelector('.filter-tree-parent');
-        toggleBtn.addEventListener('click', (e) => {
-          // Prevent closing if clicking the checkbox itself
+        li.querySelector('.filter-tree-parent').addEventListener('click', (e) => {
           if (e.target.type !== 'checkbox' && e.target.tagName !== 'LABEL') {
             li.classList.toggle('active');
           }
@@ -122,17 +137,14 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
-    document.querySelectorAll('.filter-checkbox').forEach(cb => {
-      cb.addEventListener('change', filterAndRender);
-    });
+    document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', filterAndRender));
   }
 
   function filterAndRender() {
-    let filtered = [...products];
+    let filtered = [...currentProducts];
 
-    // 1. Group active filters
+    // Filter Logic
     const activeFilters = {}; 
-
     document.querySelectorAll('.cat-filter:checked').forEach(cb => {
       const parent = cb.value;
       if (!activeFilters[parent]) activeFilters[parent] = { parentChecked: true, children: new Set() };
@@ -146,30 +158,18 @@ document.addEventListener("DOMContentLoaded", function() {
       activeFilters[parent].children.add(sub);
     });
 
-    const activeParents = Object.keys(activeFilters);
-
-    if (activeParents.length > 0) {
+    if (Object.keys(activeFilters).length > 0) {
       filtered = filtered.filter(p => {
         const pCats = p.categories || (p.category ? [p.category] : []);
         const pSubs = getSubcategories(p); 
-        
-        return activeParents.some(parentKey => {
+        return Object.keys(activeFilters).some(parentKey => {
           if (!pCats.includes(parentKey)) return false;
-
           const group = activeFilters[parentKey];
-
-          if (group.children.size > 0) {
-            return pSubs.some(s => group.children.has(s));
-          }
-
-          if (group.parentChecked) return true;
-
-          return false;
+          return (group.children.size > 0) ? pSubs.some(s => group.children.has(s)) : group.parentChecked;
         });
       });
     }
 
-    // --- PRICE & STATUS ---
     const min = document.getElementById('min-price').value;
     const max = document.getElementById('max-price').value;
     if(min) filtered = filtered.filter(p => p.price >= min);
@@ -196,7 +196,14 @@ document.addEventListener("DOMContentLoaded", function() {
       productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:50px;">No products found.</p>';
       return;
     }
-    productGrid.innerHTML = list.map(product => generateProductCard(product)).join('');
+    // CALL YOUR EXISTING FUNCTION
+    // We check if the function exists to prevent crashing
+    if (typeof generateProductCard === 'function') {
+        productGrid.innerHTML = list.map(product => generateProductCard(product)).join('');
+    } else {
+        console.error("generateProductCard function is missing! Did you delete it with products.js?");
+        productGrid.innerHTML = '<p style="color:red">Error: Design function missing.</p>';
+    }
   }
 
   sortSelect.addEventListener('change', filterAndRender);
