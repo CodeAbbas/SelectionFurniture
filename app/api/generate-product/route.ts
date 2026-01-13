@@ -7,105 +7,146 @@ export const maxDuration = 60;
 
 // --- WEBSITE STRUCTURE (The Rulebook) ---
 const WEBSITE_TAXONOMY = {
-  "Sofa": ["Sofa bed", "Corner sofa", "Corner Sofa Bed", "Recliner", "Armchair"],
-  "Beds": ["Divan", "Velvet", "High gloss", "Bunk bed"],
-  "Wardrobes": ["Sliding", "Two door", "Three/Four door", "High gloss"],
-  "Dining": ["Table", "Marble table set", "Chair", "Budget sets"],
+  Sofa: ["Sofa bed", "Corner sofa", "Corner Sofa Bed", "Recliner", "Armchair"],
+  Beds: ["Divan", "Velvet", "High gloss", "Bunk bed"],
+  Wardrobes: ["Sliding", "Two door", "Three/Four door", "High gloss"],
+  Dining: ["Table", "Marble table set", "Chair", "Budget sets"],
   "Bedroom sets": ["Table", "High gloss set", "Velvet sets", "Budget sets"],
-  "Mattress": ["Orthopedic", "Blue foam", "Spring", "Pocket spring", "Latex", "Majestic"],
+  Mattress: ["Orthopedic", "Blue foam", "Spring", "Pocket spring", "Latex", "Majestic"],
   "TV Stand": [],
-  "Armchair": []
+  Armchair: []
 };
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-    if (!apiKey) {
+    // 🔐 API key check
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       return NextResponse.json({ error: "Google API Key is missing." }, { status: 500 });
     }
 
     const { prompt } = await req.json();
+    if (!prompt || typeof prompt !== 'string') {
+      return NextResponse.json({ error: "Prompt is required." }, { status: 400 });
+    }
+
     console.log("🚀 Input Prompt:", prompt);
 
-    // 1. EXTRACT URL
+    // 1️⃣ Extract URL
     const urlMatch = prompt.match(/(https?:\/\/[^\s]+)/);
     const url = urlMatch ? urlMatch[0] : null;
+
     let scrapedImages: string[] = [];
 
-    // 2. EXTERNAL SCRAPER
+    // 2️⃣ External scraper with timeout
     if (url) {
-      console.log(`🔍 Detected URL: ${url} - Calling External Scraper...`);
+      console.log(`🔍 Detected URL: ${url}`);
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+
       try {
-        const scraperResponse = await fetch('https://image-links-scrapper.vercel.app/scrape/api', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url }),
-          cache: 'no-store'
-        });
+        const scraperResponse = await fetch(
+          'https://image-links-scrapper.vercel.app/scrape/api',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url }),
+            signal: controller.signal,
+            cache: 'no-store'
+          }
+        );
 
         if (scraperResponse.ok) {
           const data = await scraperResponse.json();
+
           if (data.success && Array.isArray(data.data)) {
-            
-            // --- FILTER OUT LOGOS & JUNK ---
             const allImages = data.data.map((img: any) => img.cleanUrl || img.url);
-            
+
             scrapedImages = allImages.filter((link: string) => {
               const lower = link.toLowerCase();
-              return !lower.includes('logo') && 
-                     !lower.includes('icon') && 
-                     !lower.includes('favicon') &&
-                     !lower.includes('loader') &&
-                     !lower.includes('placeholder') &&
-                     !lower.includes('svg'); 
+              return (
+                !lower.includes('logo') &&
+                !lower.includes('icon') &&
+                !lower.includes('favicon') &&
+                !lower.includes('loader') &&
+                !lower.includes('placeholder') &&
+                !lower.includes('svg')
+              );
             });
 
-            console.log(`✅ Scraper found ${allImages.length} raw images -> Filtered to ${scrapedImages.length} clean images`);
+            console.log(`🖼️ Images: ${scrapedImages.length} usable`);
           }
         }
       } catch (err) {
-        console.warn("⚠️ Scraper connection error:", err);
+        console.warn("⚠️ Scraper failed:", err);
+      } finally {
+        clearTimeout(timeout);
       }
     }
 
-    // 3. LOW COST CONTEXT
-    const lowCostContext = scrapedImages.slice(0, 2);
+    // 3️⃣ Low-cost visual context
+    const visualContext = scrapedImages.slice(0, 2);
 
-    // 4. GENERATE CONTENT
-    const result = await generateObject({
-      model: google('gemini-2.5-flash'),
-      schema: ProductSchema,
-      prompt: `
-        You are an expert furniture product database assistant for 'SelectionFurniture'.
-        
-        CONTEXT DATA:
-        - SOURCE URL: ${url || 'None'}
-        - USER REQUEST: ${prompt}
-        - VISUAL SAMPLES: ${JSON.stringify(lowCostContext)}
+    // 4️⃣ AI generation (schema-safe)
+    let result;
+    try {
+      result = await generateObject({
+        model: google('gemini-2.5-flash'),
+        schema: ProductSchema,
+        prompt: `
+You are an expert furniture product database assistant for "SelectionFurniture".
 
-        - **OFFICIAL WEBSITE MENU STRUCTURE (TAXONOMY):** ${JSON.stringify(WEBSITE_TAXONOMY, null, 2)}
+CONTEXT:
+- Source URL: ${url || 'None'}
+- User prompt: ${prompt}
+- Visual samples: ${JSON.stringify(visualContext)}
 
-        STRICT RULES:
-        1. **CATEGORIZATION (CRITICAL):** - **'categories'**: Must pick exactly ONE key from the 'OFFICIAL WEBSITE MENU STRUCTURE' (e.g. "Sofa" or "Beds"). You may add one secondary category if necessary, but prioritize the official list.
-           - **'subcategories'**: Must pick matching items from the list above (e.g. if Category is "Beds", subcategory MUST be "Divan" or "Velvet"). keep it under 5 items total.
+OFFICIAL TAXONOMY:
+${JSON.stringify(WEBSITE_TAXONOMY, null, 2)}
 
-        2. **GALLERY:** Return an EMPTY array []. (I will inject real images via code).
-        
-        3. **DESCRIPTION:** Write a professional description, long_description HTML(<ul>, <b>). No Markdown.
-        4. **DETAILS:** Infer Name, Price (GBP), and specs from the URL.
-      `,
-    });
-
-    // 5. COST MONITORING
-    if (result.usage) {
-      const { promptTokens, completionTokens, totalTokens } = result.usage;
-      const totalCost = ((promptTokens / 1000000) * 0.10 * 0.8) + ((completionTokens / 1000000) * 0.40 * 0.8);
-      console.log(`💰 Cost: £${totalCost.toFixed(6)} | Tokens: ${totalTokens}`);
+STRICT RULES:
+1. categories:
+   - Choose EXACTLY one main category from the taxonomy keys.
+   - Optional second category only if absolutely relevant.
+2. subcategories:
+   - Must belong to the chosen category.
+   - Max 3.
+3. gallery:
+   - ALWAYS return an empty array [].
+4. description:
+   - Plain text, professional, max 200 chars.
+5. long_description:
+   - VALID HTML ONLY.
+   - Must include <ul><li><b>Feature</b>: text</li></ul>
+6. price:
+   - Number in GBP.
+7. Do NOT invent categories or subcategories.
+        `.trim(),
+      });
+    } catch (err) {
+      console.error("❌ Gemini schema validation failed:", err);
+      return NextResponse.json(
+        { error: "AI generation failed due to schema mismatch." },
+        { status: 422 }
+      );
     }
 
-    // 6. FREE INJECTION
+    // 5️⃣ Cost monitoring (USD — honest)
+    if (result.usage) {
+      const { promptTokens, completionTokens, totalTokens } = result.usage;
+      const costUSD =
+        (promptTokens / 1_000_000) * 0.10 +
+        (completionTokens / 1_000_000) * 0.40;
+
+      console.log(`💰 Cost: $${costUSD.toFixed(6)} | Tokens: ${totalTokens}`);
+    }
+
+    // 6️⃣ Inject gallery safely (override AI)
+    const aiObject = { ...result.object };
+    delete (aiObject as any).gallery;
+
     const finalData = {
-      ...result.object,
+      ...aiObject,
       gallery: scrapedImages.slice(0, 15)
     };
 
@@ -113,6 +154,9 @@ export async function POST(req: Request) {
 
   } catch (error: any) {
     console.error("🔥 FATAL ERROR:", error);
-    return NextResponse.json({ error: "Generation Failed", details: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Generation Failed", details: error.message },
+      { status: 500 }
+    );
   }
 }

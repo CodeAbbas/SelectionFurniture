@@ -177,14 +177,42 @@ function generateProductCard(product) {
   `;
 }
 
-// 3. Render the products
-if (newProductsContainer && typeof products !== 'undefined') {
-  // Filter only standard products (IDs starting with 'prod-')
-  const standardProducts = products.filter(p => p.id.startsWith('prod-'));
-  
-  // Map them to HTML and join them into a big string
-  newProductsContainer.innerHTML = standardProducts.map(product => generateProductCard(product)).join('');
+// 3. FETCH AND RENDER FROM MONGODB API
+async function loadNewProducts() {
+  if (!newProductsContainer) return;
+
+  try {
+    // Show a loading state (optional)
+    newProductsContainer.innerHTML = '<p class="loading-text">Loading new arrivals...</p>';
+
+    // Fetch from your Next.js API
+    const response = await fetch('../api/products');
+    
+    if (!response.ok) {
+      throw new Error('Failed to connect to the database');
+    }
+
+    const fetchedProducts = await response.json();
+
+    if (fetchedProducts.length === 0) {
+      newProductsContainer.innerHTML = '<p>No products found.</p>';
+      return;
+    }
+
+    // Sort by newest first (reverse order) -> Get last 8
+    const newArrivals = fetchedProducts.reverse().slice(0, 8);
+
+    // Map them to HTML and inject
+    newProductsContainer.innerHTML = newArrivals.map(product => generateProductCard(product)).join('');
+
+  } catch (error) {
+    console.error("Error loading products:", error);
+    newProductsContainer.innerHTML = '<p>Could not load products. Please check connection.</p>';
+  }
 }
+
+// Run the fetch when the page loads
+document.addEventListener('DOMContentLoaded', loadNewProducts);
 
 
 /**
