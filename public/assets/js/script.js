@@ -199,7 +199,7 @@ async function loadNewProducts() {
       return;
     }
 
-    // Sort by newest first (reverse order) -> Get last 8
+    // Sort by newest first  -> Get last 8
     const newArrivals = fetchedProducts.reverse().slice(0, 8);
 
     // Map them to HTML and inject
@@ -349,3 +349,80 @@ function initCountdowns() {
     }, 1000);
   });
 }
+/**
+ * MINIMAL PRODUCT LISTS (New Arrivals, Trending, Top Rated)
+ */
+
+// HTML Generator for the small horizontal card
+function generateMinimalCard(product) {
+  const image = (product.gallery && product.gallery[0]) 
+    ? product.gallery[0] 
+    : (product.image || './assets/images/products/clothes-1.jpg');
+
+  const category = (product.categories && product.categories.length > 0) 
+    ? product.categories[0] 
+    : 'Furniture';
+
+  return `
+    <div class="showcase">
+      <a href="./product.html?id=${product.id}" class="showcase-img-box">
+        <img src="${image}" alt="${product.name}" width="70" class="showcase-img">
+      </a>
+      <div class="showcase-content">
+        <a href="./product.html?id=${product.id}">
+          <h4 class="showcase-title">${product.name}</h4>
+        </a>
+        <a href="#" class="showcase-category">${category}</a>
+        <div class="price-box">
+          <p class="price">${formatCurrency(product.price, product.currency)}</p>
+          ${product.original_price ? `<del>${formatCurrency(product.original_price, product.currency)}</del>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Function to fetch and render a specific section
+async function loadMinimalSection(apiQuery, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  try {
+    const res = await fetch(`/api/products?${apiQuery}`);
+    const products = await res.json();
+
+    if (!products || products.length === 0) return;
+
+    // We need to group items into containers of 4 items each
+    const chunkSize = 4;
+    let htmlContent = '';
+
+    for (let i = 0; i < products.length; i += chunkSize) {
+      const chunk = products.slice(i, i + chunkSize);
+      
+      // Create a column container
+      htmlContent += `<div class="showcase-container">`;
+      // Add the cards inside
+      htmlContent += chunk.map(p => generateMinimalCard(p)).join('');
+      // Close column
+      htmlContent += `</div>`;
+    }
+
+    container.innerHTML = htmlContent;
+
+  } catch (err) {
+    console.error(`Error loading ${containerId}:`, err);
+  }
+}
+
+// Load all 3 sections when page loads
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. New Arrivals: Sort by newest, Limit 8
+  loadMinimalSection('sort=newest&limit=8', 'minimal-new-arrivals');
+
+  // 2. Trending: Is Best Seller = true, Limit 8
+  loadMinimalSection('is_best_seller=true&limit=8', 'minimal-trending');
+
+  // 3. Top Rated: Sort by rating, Limit 8
+  loadMinimalSection('sort=rating&limit=8', 'minimal-top-rated');
+});
