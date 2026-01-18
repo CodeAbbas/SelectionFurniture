@@ -6,6 +6,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const breadcrumb = document.getElementById('breadcrumb-current');
   const filterListContainer = document.getElementById('category-filter-list');
   
+  // --- PAGINATION SETTINGS ---
+  const ITEMS_PER_PAGE = 30;
+  let activeList = []; // Stores the full filtered list
+  let visibleCount = 0; // Tracks how many are currently shown
+  let loadMoreBtn = null; // Will hold the button element
+
   // State
   let currentProducts = []; 
   
@@ -17,6 +23,38 @@ document.addEventListener("DOMContentLoaded", function() {
   // 2. INITIALIZE PAGE
   if (urlCategory) {
     breadcrumb.innerText = urlSubcategory ? `${urlCategory} / ${urlSubcategory}` : urlCategory;
+  }
+
+  // --- CREATE LOAD MORE BUTTON ---
+  function createLoadMoreButton() {
+    // Check if it already exists to avoid duplicates
+    if (document.getElementById('load-more-btn')) return;
+
+    loadMoreBtn = document.createElement('button');
+    loadMoreBtn.id = 'load-more-btn';
+    loadMoreBtn.innerText = 'Load More Products';
+    loadMoreBtn.style.cssText = `
+      display: none;
+      margin: 40px auto;
+      padding: 12px 30px;
+      background: var(--industrial-wood);
+      color: white;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    `;
+    
+    loadMoreBtn.addEventListener('mouseover', () => loadMoreBtn.style.background = 'var(--eerie-black)');
+    loadMoreBtn.addEventListener('mouseout', () => loadMoreBtn.style.background = 'var(--industrial-wood)');
+    loadMoreBtn.addEventListener('click', () => {
+      renderNextBatch();
+    });
+
+    // Insert after the grid
+    productGrid.parentNode.appendChild(loadMoreBtn);
   }
 
   // --- FETCH FUNCTION ---
@@ -36,21 +74,19 @@ document.addEventListener("DOMContentLoaded", function() {
       
       const dbData = await response.json();
 
-      // --- THE FIX: ADAPTER ---
-      // We convert the DB format to match exactly what your old 'products.js' had.
-      // This ensures your generic card design works without changes.
+      // --- ADAPTER: Convert DB format to Template format ---
       currentProducts = dbData.map(p => ({
-        ...p, // Keep all properties
-        // 1. Fix Image: If DB has 'gallery', use the first image as 'image'
-        image: (p.gallery && p.gallery.length > 0) ? p.gallery[0] : (p.image || './assets/images/products/1.jpg'),
-        // 2. Fix ID: Ensure 'id' exists (MongoDB uses '_id')
+        ...p,
+        // Fix Image: Use first gallery image or fallback
+        image: (p.gallery && p.gallery.length > 0) ? p.gallery[0] : (p.image || './assets/images/products/placeholder.webp'),
+        // Fix ID: Ensure 'id' exists
         id: p.id || p._id,
-        // 3. Ensure price is a number for sorting
+        // Ensure numbers
         price: Number(p.price),
         original_price: Number(p.original_price)
       }));
       
-      // Now we pass this "clean" data to your existing functions
+      createLoadMoreButton(); // Initialize the button
       initRichFilters();
       filterAndRender();
 
@@ -140,10 +176,11 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.filter-checkbox').forEach(cb => cb.addEventListener('change', filterAndRender));
   }
 
+  // --- FILTER LOGIC ---
   function filterAndRender() {
     let filtered = [...currentProducts];
 
-    // Filter Logic
+    // 1. Category Filters
     const activeFilters = {}; 
     document.querySelectorAll('.cat-filter:checked').forEach(cb => {
       const parent = cb.value;
@@ -170,11 +207,13 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
+    // 2. Price Filters
     const min = document.getElementById('min-price').value;
     const max = document.getElementById('max-price').value;
     if(min) filtered = filtered.filter(p => p.price >= min);
     if(max) filtered = filtered.filter(p => p.price <= max);
 
+    // 3. Status Filters
     if(document.getElementById('filter-sale').checked) {
       filtered = filtered.filter(p => (p.original_price && p.price < p.original_price) || (p.badges && p.badges.some(b => b.text.toLowerCase() === 'sale')));
     }
@@ -182,27 +221,52 @@ document.addEventListener("DOMContentLoaded", function() {
       filtered = filtered.filter(p => p.is_new_arrival);
     }
 
+    // 4. Sorting
     const sortValue = sortSelect.value;
     if(sortValue === 'price-low') filtered.sort((a,b) => a.price - b.price);
     if(sortValue === 'price-high') filtered.sort((a,b) => b.price - a.price);
     if(sortValue === 'newest') filtered.sort((a,b) => (b.is_new_arrival === true) - (a.is_new_arrival === true));
 
-    countLabel.innerText = filtered.length;
-    renderGrid(filtered);
-  }
-
-  function renderGrid(list) {
-    if (list.length === 0) {
+    // --- RESET PAGINATION ---
+    activeList = filtered;
+    countLabel.innerText = activeList.length;
+    visibleCount = 0;
+    productGrid.innerHTML = ''; // Clear existing
+    
+    // Check if empty
+    if (activeList.length === 0) {
       productGrid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding:50px;">No products found.</p>';
+      if(loadMoreBtn) loadMoreBtn.style.display = 'none';
       return;
     }
-    // CALL YOUR EXISTING FUNCTION
-    // We check if the function exists to prevent crashing
-    if (typeof generateProductCard === 'function') {
-        productGrid.innerHTML = list.map(product => generateProductCard(product)).join('');
-    } else {
-        console.error("generateProductCard function is missing! Did you delete it with products.js?");
-        productGrid.innerHTML = '<p style="color:red">Error: Design function missing.</p>';
+
+    // Initial Render
+    renderNextBatch();
+  }
+
+  // --- RENDER BATCH (PAGINATION) ---
+  function renderNextBatch() {
+    // 1. Calculate end index
+    const nextLimit = visibleCount + ITEMS_PER_PAGE;
+    
+    // 2. Get the slice of products to add
+    const batch = activeList.slice(visibleCount, nextLimit);
+    
+    if (batch.length > 0 && typeof generateProductCard === 'function') {
+      // Append HTML to the grid
+      productGrid.insertAdjacentHTML('beforeend', batch.map(product => generateProductCard(product)).join(''));
+    }
+
+    // 3. Update counter
+    visibleCount = nextLimit;
+
+    // 4. Handle Button Visibility
+    if (loadMoreBtn) {
+      if (visibleCount >= activeList.length) {
+        loadMoreBtn.style.display = 'none'; // All items shown
+      } else {
+        loadMoreBtn.style.display = 'block'; // More items exist
+      }
     }
   }
 
