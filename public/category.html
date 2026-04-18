@@ -14,7 +14,7 @@
     .category-page-container {
       display: flex;
       gap: 30px;
-      padding-top: 30px;
+      padding-top: 10px;
       padding-bottom: 50px;
       position: relative;}
 
@@ -26,8 +26,8 @@
 
     /* --- SIDEBAR FILTERS --- */
     .filter-sidebar {
-      width: 25%; /* Mobile: Full width */
-      display: none; /* Hidden by default on mobile */
+      width: 25%;
+      display: none; 
       min-width: 200px;
       background: var(--white);
       margin-bottom: 20px;
@@ -64,6 +64,7 @@
     /* --- RICH FILTER TREE (Accordion) --- */
     .filter-tree-item {
       margin-bottom: 5px;
+      position: sticky;
     }
     
     .filter-tree-parent {
@@ -282,7 +283,7 @@
             <div class="contact-item">
               <a href="tel:+447838040902" class="contact-link">
                 <ion-icon name="call-outline"></ion-icon>
-                <span>07434080902</span>
+                <span>07838040902</span>
               </a>
             </div>
             
@@ -293,7 +294,7 @@
                 <ion-icon name="chevron-down-outline" class="chevron"></ion-icon>
               </div>
               
-              <div class="dropdown-content">
+              <div class="dropdown-content" style="z-index: 1000">
                 <div class="map-card">
                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.434778116982!2d0.031098877142460613!3d51.53423630883391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a70032ae6603%3A0x2becf3ac962bf021!2sSelection%20Furniture!5e0!3m2!1sen!2suk!4v1734796020000!5m2!1sen!2suk" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                   </iframe>
@@ -813,7 +814,7 @@
   <main>
     <div class="container">
       
-      <div style="padding: 20px 0; font-size: 0.9rem; color: var(--industrial-wood); display: flex;">
+      <div style="padding: 10px 0; font-size: 0.9rem; color: var(--industrial-wood); display: flex;">
         <a href="index.html" style="color: var(--industrial-wood); font-weight: 600; margin-right: 5px;">Home </a> / <span id="breadcrumb-current" style="color: var(--eerie-black); font-weight: 600; margin-left: 5px;"> Shop</span>
       </div>
 
