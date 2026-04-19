@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // 1. READ URL PARAMS
   const urlParams = new URLSearchParams(window.location.search);
   const urlCategory = urlParams.get('category');     
-  const urlSubcategory = urlParams.get('subcategory'); 
+  const urlSubcategory = urlParams.get('subcategory');
+  const urlSearch = urlParams.get('q');
 
   // 2. INITIALIZE PAGE
   if (urlCategory) {
