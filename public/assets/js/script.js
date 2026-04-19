@@ -50,7 +50,28 @@ mobileMenuCloseBtn.forEach(btn => {
 if (overlay) {
   overlay.addEventListener('click', closeAllMenus);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.querySelector('.search-field');
+  const searchBtn = document.querySelector('.search-btn');
 
+  const executeSearch = () => {
+    const query = searchInput.value.trim();
+    if (query) {
+      // Pushes search queries to the browser's URL parameters.
+      window.location.href = `category.html?q=${encodeURIComponent(query)}`;
+    }
+  };
+
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', executeSearch);
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        executeSearch();
+      }
+    });
+  }
+});
 // Global Document Listener for "Outside" clicks
 document.addEventListener('click', (event) => {
   mobileMenus.forEach(menu => {

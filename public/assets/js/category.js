@@ -24,10 +24,18 @@ document.addEventListener("DOMContentLoaded", function() {
   if (urlCategory) {
     breadcrumb.innerText = urlSubcategory ? `${urlCategory} / ${urlSubcategory}` : urlCategory;
   }
-
+  function generateSkeletonCards(count = 6) {
+  return Array(count).fill(`
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-img"></div>
+      <div class="skeleton skeleton-text"></div>
+      <div class="skeleton skeleton-text short"></div>
+      <div class="skeleton skeleton-text price"></div>
+    </div>
+  `).join('');
+  }
   // --- CREATE LOAD MORE BUTTON ---
   function createLoadMoreButton() {
-    // Check if it already exists to avoid duplicates
     if (document.getElementById('load-more-btn')) return;
 
     loadMoreBtn = document.createElement('button');
@@ -59,42 +67,41 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // --- FETCH FUNCTION ---
   async function fetchProducts() {
-    try {
-      productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 40px; color: var(--sonic-silver);">Loading products...</div>';
-      
-      let apiUrl = '/api/products';
-      const params = new URLSearchParams();
-      if (urlCategory) params.append('category', urlCategory);
-      if (urlSubcategory) params.append('subcategory', urlSubcategory);
-      
-      const fullUrl = params.toString() ? `${apiUrl}?${params.toString()}` : apiUrl;
+  try {
+    // 1. INJECT SKELETONS WHILE FETCHING
+    productGrid.innerHTML = generateSkeletonCards(6);
+    
+    let apiUrl = '/api/products';
+    const params = new URLSearchParams();
+    if (urlCategory) params.append('category', urlCategory);
+    if (urlSubcategory) params.append('subcategory', urlSubcategory);
+    if (urlSearch) params.append('q', urlSearch); 
+    
+    const fullUrl = params.toString() ? `${apiUrl}?${params.toString()}` : apiUrl;
 
-      const response = await fetch(fullUrl);
-      if (!response.ok) throw new Error("API Connection Error");
-      
-      const dbData = await response.json();
+    const response = await fetch(fullUrl);
+    if (!response.ok) throw new Error("API Connection Error");
+    
+    const dbData = await response.json();
 
-      // --- ADAPTER: Convert DB format to Template format ---
-      currentProducts = dbData.map(p => ({
-        ...p,
-        // Fix Image: Use first gallery image or fallback
-        image: (p.gallery && p.gallery.length > 0) ? p.gallery[0] : (p.image || './assets/images/products/placeholder.webp'),
-        // Fix ID: Ensure 'id' exists
-        id: p.id || p._id,
-        // Ensure numbers
-        price: Number(p.price),
-        original_price: Number(p.original_price)
-      }));
-      
-      createLoadMoreButton(); // Initialize the button
-      initRichFilters();
-      filterAndRender();
+    // --- ADAPTER ---
+    currentProducts = dbData.map(p => ({
+      ...p,
+      image: (p.gallery && p.gallery.length > 0) ? p.gallery[0] : (p.image || './assets/images/products/placeholder.webp'),
+      id: p.id || p._id,
+      price: Number(p.price),
+      original_price: Number(p.original_price)
+    }));
+    
+    createLoadMoreButton(); 
+    initRichFilters();
+    filterAndRender();
 
-    } catch (err) {
-      console.error(err);
-      productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:red; padding: 40px;">Could not load products.</div>';
-    }
+  } catch (err) {
+    console.error(err);
+    productGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:red; padding: 40px;">Could not load products. Please check your connection.</div>';
   }
+}
 
   fetchProducts();
 
