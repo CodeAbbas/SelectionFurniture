@@ -197,6 +197,34 @@
     display: none !important;
   }
     }
+    
+    /* --- MOBILE-FIRST 2-COLUMN GRID (dlt)--- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* Enforce a 4:3 aspect ratio on product images to prevent vertical stretching */
+.showcase-banner img.product-img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* Scale up for tablets and desktops */
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 
   </style>
 

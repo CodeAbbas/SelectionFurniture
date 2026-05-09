@@ -166,14 +166,27 @@ function generateProductCard(product) {
       ${product.original_price ? `<del>${formatCurrency(product.original_price, product.currency)}</del>` : ''}
     </div>
   `;*/
-  // hiding pricing from customer 
+  // hiding pricing from customer CTA whatsapp
   const currencySymbol = product.currency === 'USD' ? '$' : product.currency === 'EUR' ? '€' : '£';
+  
+  // 1. Construct the WhatsApp link dynamically using your shop's phone number
+  const shopPhone = "447838040902"; 
+  const productUrl = `${window.location.origin}/product.html?id=${product.id}`;
+  const waMessage = encodeURIComponent(`اسلام علیکم، میں اس چیز کی قیمت کے بارے میں بات چیت کرنا چاہتا ہوں: *${product.name}*۔ یہ رہا اس کا لنک: ${productUrl}`);
+  const waLink = `https://wa.me/${shopPhone}?text=${waMessage}`;
 
+  // wrap the text in a link pointing to WhatsApp
   const priceHtml = `
     <div class="price-box">
-      <p class="price" style="color: var(--sonic-silver); font-weight:300;">${currencySymbol} Call for Price</p>
+      <p class="price" style="color: var(--sonic-silver); font-weight:300;">
+        <a href="${waLink}" target="_blank" style="color: inherit; text-decoration: none; display: flex; align-items: center; gap: 5px;">
+          <ion-icon name="logo-whatsapp" style="color: var(--sonic-silver); font-size: 0.9rem;"></ion-icon>
+          ${currencySymbol} Call for Price
+        </a>
+      </p>
     </div>
   `;
+
   return `
     <div class="showcase">
       <div class="showcase-banner">
