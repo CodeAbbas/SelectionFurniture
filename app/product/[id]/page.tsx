@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-[span_2](start_span)import dbConnect from '@/lib/mongodb';[span_2](end_span)
-[span_3](start_span)import Product from '@/models/Product';[span_3](end_span)
+import dbConnect from '@/lib/mongodb';
+import Product from '@/models/Product';
 
 type Props = {
   params: { id: string };
