@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await dbConnect();
   const product = await Product.findOne({ 
     $or: [{ id: id }, { _id: id }] 
-  } as any).lean(); [span_4](start_span)[span_5](start_span)
+  } as any).lean();
   if (!product) {
     notFound();
   }
