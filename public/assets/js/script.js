@@ -160,13 +160,20 @@ function generateProductCard(product) {
     });
   }
 
-  const priceHtml = `
+  /*const priceHtml = `
     <div class="price-box">
       <p class="price">${formatCurrency(product.price, product.currency)}</p>
       ${product.original_price ? `<del>${formatCurrency(product.original_price, product.currency)}</del>` : ''}
     </div>
-  `;
+  `;*/
+  // hiding pricing from customer 
+  const currencySymbol = product.currency === 'USD' ? '$' : product.currency === 'EUR' ? '€' : '£';
 
+  const priceHtml = `
+    <div class="price-box">
+      <p class="price" style="color: var(--sonic-silver); font-weight:300;">${currencySymbol} Call for Price</p>
+    </div>
+  `;
   return `
     <div class="showcase">
       <div class="showcase-banner">

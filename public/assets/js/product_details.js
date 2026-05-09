@@ -46,7 +46,10 @@ document.addEventListener("DOMContentLoaded", async function() {
     document.getElementById('detail-name').innerText = product.name;
     document.getElementById('detail-id').innerText = product.id;
     document.getElementById('detail-desc').innerText = product.description || "Experience comfort and style with this premium furniture piece.";
-    document.getElementById('detail-price').innerText = formatCurrency(product.price, product.currency || 'GBP');
+    /*document.getElementById('detail-price').innerText = formatCurrency(product.price, product.currency || 'GBP');*/
+      const currencySymbol = product.currency === 'USD' ? '$' : product.currency === 'EUR' ? '€' : '£';
+      document.getElementById('detail-price').innerText = `${currencySymbol} Call for price`;
+
 
     // ---  CATEGORY BREADCRUMB ---
     const categoryEl = document.getElementById('detail-category');
