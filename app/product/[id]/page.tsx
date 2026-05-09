@@ -14,26 +14,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   await dbConnect();
 
-  const product = await (Product.findOne({ 
+  // Fix: Cast the filter object itself to any to prevent the '$or' type error
+  const product = await Product.findOne({ 
     $or: [{ id: id }, { _id: id }] 
-  }).lean() as any);
+  } as any).lean();
 
   if (!product) {
     return { title: 'Product Not Found - Selection Furniture' };
   }
 
   const siteUrl = "https://selection-furniture.vercel.app";
-  const firstImage = product.gallery?.[0] || '/assets/images/products/placeholder.webp';
+  const firstImage = (product as any).gallery?.[0] || '/assets/images/products/placeholder.webp';
   const absoluteImageUrl = firstImage.startsWith('http') 
     ? firstImage 
     : `${siteUrl}/${firstImage.replace(/^\.\//, '').replace(/^\//, '')}`;
 
   return {
-    title: `${product.name} - Selection Furniture`,
-    description: product.description || "Quality home decor from Selection Furniture",
+    title: `${(product as any).name} - Selection Furniture`,
+    description: (product as any).description || "Quality home decor from Selection Furniture",
     openGraph: {
-      title: product.name,
-      description: product.description,
+      title: (product as any).name,
+      description: (product as any).description,
       url: `${siteUrl}/product/${id}`,
       siteName: 'Selection Furniture',
       images: [{ url: absoluteImageUrl }],
@@ -41,8 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: product.name,
-      description: product.description,
+      title: (product as any).name,
+      description: (product as any).description,
       images: [absoluteImageUrl],
     },
   };
@@ -55,15 +56,15 @@ export default async function ProductPage({ params }: Props) {
   const { id } = await params;
   await dbConnect();
 
-  const product = await (Product.findOne({ 
+  // Fix: Cast the filter object to any so TypeScript ignores the $or check
+  const product = await Product.findOne({ 
     $or: [{ id: id }, { _id: id }] 
-  }).lean() as any);
+  } as any).lean();
 
   if (!product) {
     notFound();
   }
 
-  // Ensure data is serializable for the client component
   const serializableProduct = JSON.parse(JSON.stringify(product));
 
   return (
