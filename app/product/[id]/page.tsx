@@ -57,18 +57,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /**
  * 2. PRODUCT PAGE COMPONENT
  */
-export default async function ProductPage({ params }: Props) {
-  const { id } = await params;
+ export default async function ProductPage({ params }: Props) {
+  const { id } = await params; 
   await dbConnect();
   const product = await Product.findOne({ 
     $or: [{ id: id }, { _id: id }] 
-  }).lean();
-
+  } as any).lean(); [span_4](start_span)[span_5](start_span)
   if (!product) {
     notFound();
   }
 
   const serializableProduct = JSON.parse(JSON.stringify(product));
+
 
   return (
     <main className="product-container">
