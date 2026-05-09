@@ -12,10 +12,10 @@ type Props = {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   await dbConnect();
-  
   const product = await Product.findOne({ 
-    $or: [{ id: params.id }, { _id: params.id }] 
-  }).lean();
+  $or: [{ id: params.id }, { _id: params.id }] 
+} as any).lean();
+  
 
   if (!product) {
     return { title: 'Product Not Found - Selection Furniture' };
@@ -60,8 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params }: Props) {
   await dbConnect();
   const product = await Product.findOne({ 
-    $or: [{ id: params.id }, { _id: params.id }] 
-  }).lean();
+  $or: [{ id: params.id }, { _id: params.id }] 
+} as any).lean();
 
   if (!product) {
     notFound();
