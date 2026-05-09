@@ -171,7 +171,7 @@ function generateProductCard(product) {
   
   // 1. Construct the WhatsApp link dynamically using your shop's phone number
   const shopPhone = "447838040902"; 
-  const productUrl = `${window.location.origin}/product.html?id=${product.id}`;
+  const productUrl = `${window.location.origin}/product/${product.id}`;
   const waMessage = encodeURIComponent(`اسلام علیکم، میں اس چیز کی قیمت کے بارے میں بات چیت کرنا چاہتا ہوں: *${product.name}*۔ یہ رہا اس کا لنک: ${productUrl}`);
   const waLink = `https://wa.me/${shopPhone}?text=${waMessage}`;
 
@@ -190,7 +190,7 @@ function generateProductCard(product) {
   return `
     <div class="showcase">
       <div class="showcase-banner">
-        <a href="./product.html?id=${product.id}">
+        <a href="/product/${product.id}">
           <img src="${imgDefault}" alt="${product.name}" width="300" class="product-img default">
           <img src="${imgHover}" alt="${product.name}" width="300" class="product-img hover">
         </a>
@@ -204,7 +204,7 @@ function generateProductCard(product) {
       </div>
       <div class="showcase-content">
         <a href="#" class="showcase-category">${displayCategory}</a>
-        <h3><a href="./product.html?id=${product.id}" class="showcase-title">${product.name}</a></h3>
+        <h3><a href="/product/${product.id}" class="showcase-title">${product.name}</a></h3>
         <div class="showcase-rating">
           <ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-outline"></ion-icon><ion-icon name="star-outline"></ion-icon>
         </div>
@@ -260,7 +260,7 @@ function generateDealCard(product) {
         </div>
         <div class="showcase-content">
           <div class="showcase-rating">${generateStars(product.rating)}</div>
-          <a href="./product.html?id=${product.id}"><h3 class="showcase-title">${product.name}</h3></a>
+          <a href="/product/${product.id}"><h3 class="showcase-title">${product.name}</h3></a>
           <p class="showcase-desc">${product.description}</p>
           <div class="price-box">
             <p class="price">${formatCurrency(product.price, product.currency)}</p>
@@ -325,11 +325,11 @@ function generateMinimalCard(product) {
   const category = (product.categories && product.categories.length > 0) ? product.categories[0] : 'Furniture';
   return `
     <div class="showcase">
-      <a href="./product.html?id=${product.id}" class="showcase-img-box">
+      <a href="/product/${product.id}" class="showcase-img-box">
         <img src="${image}" alt="${product.name}" width="70" class="showcase-img">
       </a>
       <div class="showcase-content">
-        <a href="./product.html?id=${product.id}"><h4 class="showcase-title">${product.name}</h4></a>
+        <a href="/product/${product.id}"><h4 class="showcase-title">${product.name}</h4></a>
         <a href="#" class="showcase-category">${category}</a>
         <div class="price-box">
           <p class="price">${formatCurrency(product.price, product.currency)}</p>

@@ -58,10 +58,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  * 2. PRODUCT PAGE COMPONENT
  */
 export default async function ProductPage({ params }: Props) {
+  const { id } = await params;
   await dbConnect();
   const product = await Product.findOne({ 
-  $or: [{ id: params.id }, { _id: params.id }] 
-} as any).lean();
+    $or: [{ id: id }, { _id: id }] 
+  }).lean();
 
   if (!product) {
     notFound();
