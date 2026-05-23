@@ -1,10 +1,11 @@
 import './globals.css';
+import './style.css';
 
 import type { Metadata } from 'next';
 import Script from 'next/script';
 
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Header from '@/app/components/layout/Header';
+import Footer from '@/app/components/layout/Footer';
 
 export const metadata: Metadata = {
   title: 'Selection Furniture',

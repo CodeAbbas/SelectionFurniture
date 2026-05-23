@@ -74,7 +74,7 @@ export default function Header() {
                   className="contact-link"
                 >
                   <ion-icon name="call-outline"></ion-icon>
-                  <span>07434080902</span>
+                  <span>07838040902</span>
                 </a>
               </div>
 
