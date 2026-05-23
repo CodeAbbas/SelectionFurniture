@@ -1,5 +1,4 @@
 import './globals.css';
-import './style.css';
 
 import type { Metadata } from 'next';
 import Script from 'next/script';
@@ -19,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/assets/css/style.css" />
+      </head>
       <body>
         <Header />
 
