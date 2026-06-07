@@ -1,6 +1,19 @@
 /// <reference types="next" />
 /// <reference types="next/image-types/global" />
 import "./.next/dev/types/routes.d.ts";
+import React from 'react';
 
-// NOTE: This file should not be edited
-// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-icon': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          name?: string;
+          class?: string;
+          size?: string;
+        },
+        HTMLElement
+      >;
+    }
+  }
+}
