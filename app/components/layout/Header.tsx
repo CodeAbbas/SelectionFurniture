@@ -1,6 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 
 export default function Header() {
+  // Direct dynamic element casting bypasses JSX compile-time strict type checking
+  const IonIcon = 'ion-icon' as any;
+
   return (
     <header>
       {/* HEADER TOP */}
@@ -9,25 +14,25 @@ export default function Header() {
           <ul className="header-social-container">
             <li>
               <a href="#" className="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
+                <IonIcon name="logo-facebook" />
               </a>
             </li>
 
             <li>
               <a href="#" className="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
+                <IonIcon name="logo-twitter" />
               </a>
             </li>
 
             <li>
               <a href="#" className="social-link">
-                <ion-icon name="logo-instagram"></ion-icon>
+                <IonIcon name="logo-instagram" />
               </a>
             </li>
 
             <li>
               <a href="#" className="social-link">
-                <ion-icon name="logo-linkedin"></ion-icon>
+                <IonIcon name="logo-linkedin" />
               </a>
             </li>
           </ul>
@@ -73,7 +78,7 @@ export default function Header() {
                   href="tel:+447838040902"
                   className="contact-link"
                 >
-                  <ion-icon name="call-outline"></ion-icon>
+                  <IonIcon name="call-outline" />
                   <span>07838040902</span>
                 </a>
               </div>
@@ -83,14 +88,14 @@ export default function Header() {
                 tabIndex={0}
               >
                 <div className="contact-link">
-                  <ion-icon name="location-outline"></ion-icon>
+                  <IonIcon name="location-outline" />
 
                   <span>72 Queens Market</span>
 
-                  <ion-icon
+                  <IonIcon
                     name="chevron-down-outline"
                     className="chevron"
-                  ></ion-icon>
+                  />
                 </div>
 
                 <div className="dropdown-content">
@@ -107,7 +112,7 @@ export default function Header() {
                       <strong>Selection Furniture</strong>
 
                       <p>
-                        72 Queen&apos;s Market, Upton Park,
+                        72 Queen's Market, Upton Park,
                         <br />
                         E13 9BA, London
                       </p>
@@ -136,7 +141,7 @@ export default function Header() {
             />
 
             <button className="search-btn">
-              <ion-icon name="search-outline"></ion-icon>
+              <IonIcon name="search-outline" />
             </button>
           </div>
         </div>
@@ -218,27 +223,27 @@ export default function Header() {
       {/* MOBILE NAVIGATION */}
       <div className="mobile-bottom-navigation">
         <button className="action-btn">
-          <ion-icon name="menu-outline"></ion-icon>
+          <IonIcon name="menu-outline" />
         </button>
 
         <button className="action-btn">
-          <ion-icon name="bag-handle-outline"></ion-icon>
+          <IonIcon name="bag-handle-outline" />
           <span className="count">0</span>
         </button>
 
         <Link href="/" className="action-btn">
-          <ion-icon name="home-outline"></ion-icon>
+          <IonIcon name="home-outline" />
         </Link>
 
         <button className="action-btn">
-          <ion-icon name="heart-outline"></ion-icon>
+          <IonIcon name="heart-outline" />
           <span className="count">0</span>
         </button>
 
         <button className="action-btn">
-          <ion-icon name="grid-outline"></ion-icon>
+          <IonIcon name="grid-outline" />
         </button>
       </div>
     </header>
   );
-}
+                }
