@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ProductGallery from '../../components/product/ProductGallery';
-import mongoose from 'mongoose';
 
 import dbConnect from '../../../lib/mongodb';
 import Product from '../../../models/Product';
@@ -35,12 +34,12 @@ export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { id } = await params;
-
   await dbConnect();
 
-  const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+  // Strict regex check to ensure 'id' is a valid 24-character hex string
+  const isMongoId = /^[0-9a-fA-F]{24}$/.test(id);
 
-  const finalQuery = isValidObjectId
+  const finalQuery = isMongoId
     ? { $or: [{ id }, { _id: id }] }
     : { id };
 
@@ -97,12 +96,12 @@ export async function generateMetadata({
 ========================================================= */
 export default async function ProductPage({ params }: Props) {
   const { id } = await params;
-
   await dbConnect();
 
-  const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
+  // Strict regex check to ensure 'id' is a valid 24-character hex string
+  const isMongoId = /^[0-9a-fA-F]{24}$/.test(id);
 
-  const finalQuery = isValidObjectId
+  const finalQuery = isMongoId
     ? { $or: [{ id }, { _id: id }] }
     : { id };
 
@@ -118,14 +117,14 @@ export default async function ProductPage({ params }: Props) {
     serializableProduct.gallery?.[0] ||
     serializableProduct.image ||
     '/assets/images/products/placeholder.webp';
-const cleanImageSrc = rawImage.startsWith('http')
-  ? rawImage
-  : rawImage.startsWith('./')
-  ? rawImage.substring(1)
-  : rawImage.startsWith('/')
-  ? rawImage
-  : `/${rawImage}`;
-  
+    
+  const cleanImageSrc = rawImage.startsWith('http')
+    ? rawImage
+    : rawImage.startsWith('./')
+    ? rawImage.substring(1)
+    : rawImage.startsWith('/')
+    ? rawImage
+    : `/${rawImage}`;
 
   const currencySymbol =
     serializableProduct.currency === 'USD'
@@ -193,10 +192,10 @@ const cleanImageSrc = rawImage.startsWith('http')
                     >
                       {/* PRODUCT IMAGE */}
                       <ProductGallery
-  name={serializableProduct.name}
-  gallery={serializableProduct.gallery}
-  image={serializableProduct.image}
-/>
+                        name={serializableProduct.name}
+                        gallery={serializableProduct.gallery}
+                        image={serializableProduct.image}
+                      />
 
                       {/* PRODUCT CONTENT */}
                       <div
@@ -511,4 +510,4 @@ const cleanImageSrc = rawImage.startsWith('http')
       </main>
     </>
   );
-}
+    }
