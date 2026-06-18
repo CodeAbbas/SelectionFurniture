@@ -36,15 +36,14 @@ export async function generateMetadata({
   const { id } = await params;
   await dbConnect();
 
-  // Strict regex check to ensure 'id' is a valid 24-character hex string
   const isMongoId = /^[0-9a-fA-F]{24}$/.test(id);
 
-  const finalQuery = isMongoId
+  // ADD ": any" HERE TO BYPASS STRICT MONGOOSE TYPESCRIPT CHECKING
+  const finalQuery: any = isMongoId
     ? { $or: [{ id }, { _id: id }] }
     : { id };
 
   const product = (await Product.findOne(finalQuery).lean()) as ProductDocument;
-
   if (!product) {
     return {
       title: 'Product Not Found - Selection Furniture',
